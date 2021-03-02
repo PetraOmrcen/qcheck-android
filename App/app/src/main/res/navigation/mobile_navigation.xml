@@ -15,5 +15,17 @@
         android:id="@+id/navigation_map"
         android:name="com.example.myapplication.ui.map.MapFragment"
         android:label="@string/title_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_map" />
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.example.myapplication.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.myapplication.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
