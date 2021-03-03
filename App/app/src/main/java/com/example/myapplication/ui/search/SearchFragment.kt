@@ -22,8 +22,8 @@ class SearchFragment : Fragment() {
     ): View? {
         searchViewModel =
             ViewModelProvider(this).get(SearchViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
+        val root = inflater.inflate(R.layout.fragment_search, container, false)
+        val textView: TextView = root.findViewById(R.id.text_search)
         searchViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
