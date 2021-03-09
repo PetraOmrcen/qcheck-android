@@ -79,11 +79,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         getLocationPermission()
 
-        getDeviceLocation()
+        //getDeviceLocation()
 
-        updateLocationUI()
+        //updateLocationUI()
 
-        googleMap?.addMarker(MarkerOptions().position(defaultLocation).title("FER"))
+        googleMap?.setInfoWindowAdapter(activity?.let { CustomInfoWindowForGoogleMap(it) })
+        googleMap?.addMarker(MarkerOptions().position(defaultLocation).title("FER").snippet("Capacity: 15/30"))
         googleMap?.moveCamera(CameraUpdateFactory.zoomTo(15F))
         googleMap?.moveCamera((CameraUpdateFactory.newLatLng(defaultLocation)))
     }
