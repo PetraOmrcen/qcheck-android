@@ -9,23 +9,61 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.R
+import com.example.myapplication.data.network.Resource
+import com.example.myapplication.data.network.UserApi
+import com.example.myapplication.data.repository.UserRepository
+import com.example.myapplication.data.responses.User
+import com.example.myapplication.databinding.FragmentHomeBinding
+import com.example.myapplication.ui.base.BaseFragment
+import com.example.myapplication.ui.visible
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding, UserRepository>() {
 
-    private lateinit var homeViewModel: HomeViewModel
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.progressbar.visible(false)
+
+        viewModel.getUser()
+
+        viewModel.user.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Resource.Success -> {
+                    binding.progressbar.visible(false)
+                    updateUI(it.value.user)
+                }
+                is Resource.Loading -> {
+                    binding.progressbar.visible(true)
+                }
+            }
         })
-        return root
+
+        binding.buttonLogout.setOnClickListener {
+            logout()
+        }
+    }
+
+    private fun updateUI(user: User) {
+        with(binding) {
+            textViewId.text = user.id.toString()
+            textViewName.text = user.name
+            textViewEmail.text = user.email
+        }
+    }
+
+    override fun getViewModel() = HomeViewModel::class.java
+
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ) = FragmentHomeBinding.inflate(inflater, container, false)
+
+    override fun getFragmentRepository(): UserRepository {
+        val token = runBlocking { userPreferences.authToken.first() }
+        val api = remoteDataSource.buildApi(UserApi::class.java, token)
+        return UserRepository(api)
     }
 }
