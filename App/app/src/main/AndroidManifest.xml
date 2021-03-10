@@ -23,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-
+        <activity android:name=".ui.auth.LoginActivity"
+            android:parentActivityName=".MainActivity"/>
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
@@ -34,10 +35,10 @@
 
         <activity
             android:name=".ui.auth.AuthActivity"
-            android:label="">
+            android:label=""
+            android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
