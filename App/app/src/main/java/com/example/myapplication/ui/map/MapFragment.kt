@@ -12,6 +12,17 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import android.location.Location
+import android.widget.SearchView
+import androidx.lifecycle.Observer
+import com.example.myapplication.data.network.PlaceApi
+import com.example.myapplication.data.network.Resource
+import com.example.myapplication.data.repository.PlaceRepository
+import com.example.myapplication.data.responses.Place
+import com.example.myapplication.databinding.FragmentMapBinding
+import com.example.myapplication.databinding.FragmentSearchBinding
+import com.example.myapplication.ui.base.BaseFragment
+import com.example.myapplication.ui.search.ListViewAdapter
+import com.example.myapplication.ui.search.SearchViewModel
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -21,7 +32,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
 
-class MapFragment : Fragment(), OnMapReadyCallback {
+class MapFragment() : BaseFragment<MapViewModel, FragmentMapBinding, PlaceRepository>(), OnMapReadyCallback {
     var mMapView: MapView? = null
     private var googleMap: GoogleMap? = null
     private var locationPermissionGranted = false
@@ -30,13 +41,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private val defaultLocation = LatLng(45.80161397098212, 15.970883667124058)
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val rootView: View = inflater.inflate(R.layout.fragment_map, container, false)
-        mMapView = rootView.findViewById(R.id.mapView)
+    private var arraylist = ArrayList<Place>()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mMapView = binding.mapView
         mMapView!!.onCreate(savedInstanceState)
         mMapView!!.onResume() // needed to get the map to display immediately
         try {
@@ -49,9 +58,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         placesClient = activity?.let { Places.createClient(it) }!!
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        mMapView?.getMapAsync(this)
+        viewModel.getPlaces()
 
-        return rootView
+        mMapView?.getMapAsync(this)
     }
 
     override fun onResume() {
@@ -84,9 +93,22 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         //updateLocationUI()
 
         googleMap?.setInfoWindowAdapter(activity?.let { CustomInfoWindowForGoogleMap(it) })
-        googleMap?.addMarker(MarkerOptions().position(defaultLocation).title("FER").snippet("Capacity: 15/30"))
         googleMap?.moveCamera(CameraUpdateFactory.zoomTo(15F))
         googleMap?.moveCamera((CameraUpdateFactory.newLatLng(defaultLocation)))
+
+        viewModel.places.observe(viewLifecycleOwner, Observer { it ->
+            when (it) {
+                is Resource.Success -> {
+                    for (element in it.value)
+                    {
+                        arraylist.add(element)
+                        val elLocation = LatLng(element.latitude, element.longitude)
+                        googleMap?.addMarker(MarkerOptions().position(elLocation).title(element.placeName).snippet(element.currentOccupancy.toString() + " / " + element.maxOccupancy.toString()))
+
+                    }
+                }
+            }
+        })
     }
 
     private fun getLocationPermission() {
@@ -179,6 +201,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             //Log.e("Exception: %s", e.message, e)
         }
     }
+
+    override fun getViewModel() = MapViewModel::class.java
+
+    override fun getFragmentBinding(
+            inflater: LayoutInflater,
+            container: ViewGroup?
+    ): FragmentMapBinding = FragmentMapBinding.inflate(inflater, container, false)
+
+    override fun getFragmentRepository() = PlaceRepository(remoteDataSource.buildApi(PlaceApi::class.java))
 
     companion object{
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1

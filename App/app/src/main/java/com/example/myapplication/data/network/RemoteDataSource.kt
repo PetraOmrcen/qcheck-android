@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RemoteDataSource {
     companion object {
-        private const val BASE_URL = "http://simplifiedcoding.tech/mywebapp/public/api/" //ovo promijeniti u nas!!!!!!!!!!!!!!!!!!!!
+        private const val BASE_URL = "https://qcheck-backend.herokuapp.com/" //ovo promijeniti u nas!!!!!!!!!!!!!!!!!!!!
     }
 
     fun <Api> buildApi(

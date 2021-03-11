@@ -1,15 +1,18 @@
 package com.example.myapplication.ui.search
 
 import android.content.Context
+import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.example.myapplication.models.Place
+import com.example.myapplication.R
+import com.example.myapplication.data.responses.Place
 import java.util.*
 
-class ListViewAdapter(var mContext: Context, placeList: MutableList<Place>?
+class ListViewAdapter(var mContext: Context,
+                      placeList: MutableList<Place>?
 ) :
     BaseAdapter() {
     private var inflater: LayoutInflater
@@ -29,15 +32,26 @@ class ListViewAdapter(var mContext: Context, placeList: MutableList<Place>?
     }
 
     override fun getItemId(position: Int): Long {
-        return placeList!![position].placeID
+        return placeList!![position].id.toLong()
     }
 
-    override fun getView(position: Int, view: View, parent: ViewGroup): View {
-        var view = view
-        val holder: ViewHolder = view.tag as ViewHolder
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
+        var convertView = convertView
+        var viewHolder: ViewHolder
+        if (convertView == null) {
+            viewHolder = ViewHolder()
+            val layoutInflater = mContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            convertView = layoutInflater.inflate(R.layout.listview_item, null)
+
+            viewHolder.name = convertView.findViewById(R.id.nameLabel)
+
+            convertView.tag = viewHolder
+        } else {
+            viewHolder = convertView.tag as ViewHolder
+        }
         // Set the results into TextViews
-        holder.name?.text = placeList!![position].placeName
-        return view
+        viewHolder.name?.text = placeList!![position].placeName + ": " + placeList!![position].currentOccupancy + " / " + placeList!![position].maxOccupancy
+        return convertView
     }
 
     // Filter Class

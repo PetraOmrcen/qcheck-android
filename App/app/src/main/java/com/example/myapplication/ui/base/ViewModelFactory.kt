@@ -4,9 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.data.repository.AuthRepository
 import com.example.myapplication.data.repository.BaseRepository
+import com.example.myapplication.data.repository.PlaceRepository
 import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.ui.auth.AuthViewModel
 import com.example.myapplication.ui.home.HomeViewModel
+import com.example.myapplication.ui.map.MapViewModel
+import com.example.myapplication.ui.search.SearchViewModel
 import java.lang.IllegalArgumentException
 
 @Suppress("UNCHECKED_CAST")
@@ -18,6 +21,8 @@ class ViewModelFactory(
         return when {
             modelClass.isAssignableFrom(AuthViewModel::class.java) -> AuthViewModel(repository as AuthRepository) as T
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> HomeViewModel(repository as UserRepository) as T
+            modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(repository as PlaceRepository) as T
+            modelClass.isAssignableFrom(MapViewModel::class.java) -> MapViewModel(repository as PlaceRepository) as T
             else -> throw IllegalArgumentException("ViewModelClass Not Found")
         }
     }
