@@ -18,7 +18,11 @@ class CustomInfoWindowForGoogleMap(context: Context) : GoogleMap.InfoWindowAdapt
         val tvTitle = view.findViewById<TextView>(R.id.title)
         val tvSnippet = view.findViewById<TextView>(R.id.snippet)
 
-        view.findViewById<ProgressBar>(R.id.capacityProgressBar).progress = 50
+        val currentOccupacy = marker.snippet.split(" / ")[0].toInt()
+        val maxOccupacy = marker.snippet.split(" / ")[1].toInt()
+        val progress = (currentOccupacy.toFloat() / maxOccupacy.toFloat()) * 100
+
+        view.findViewById<ProgressBar>(R.id.capacityProgressBar).progress = progress.toInt()
         tvTitle.text = marker.title
         tvSnippet.text = marker.snippet
 
