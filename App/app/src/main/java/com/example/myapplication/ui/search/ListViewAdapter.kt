@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.example.myapplication.R
 import com.example.myapplication.data.responses.Place
@@ -36,22 +38,33 @@ class ListViewAdapter(var mContext: Context,
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
-        var convertView = convertView
-        var viewHolder: ViewHolder
-        if (convertView == null) {
-            viewHolder = ViewHolder()
-            val layoutInflater = mContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertView = layoutInflater.inflate(R.layout.listview_item, null)
+//        var convertView = convertView
+//        var viewHolder: ViewHolder
+//        if (convertView == null) {
+//            viewHolder = ViewHolder()
+//            val layoutInflater = mContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+//            convertView = layoutInflater.inflate(R.layout.listview_item, null)
+//
+//            viewHolder.name = convertView.findViewById(R.id.title)
+//
+//            convertView.tag = viewHolder
+//        } else {
+//            viewHolder = convertView.tag as ViewHolder
+//        }
+//        viewHolder.name?.text = placeList!![position].placeName + ": " + placeList!![position].currentOccupancy + " / " + placeList!![position].maxOccupancy
 
-            viewHolder.name = convertView.findViewById(R.id.nameLabel)
+        val inflater = mContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val rowView = inflater.inflate(R.layout.listview_item, null, true)
 
-            convertView.tag = viewHolder
-        } else {
-            viewHolder = convertView.tag as ViewHolder
-        }
-        // Set the results into TextViews
-        viewHolder.name?.text = placeList!![position].placeName + ": " + placeList!![position].currentOccupancy + " / " + placeList!![position].maxOccupancy
-        return convertView
+        val titleText = rowView.findViewById(R.id.title) as TextView
+        val imageView = rowView.findViewById(R.id.icon) as ImageView
+        val progressBar = rowView.findViewById(R.id.capacityProgressBar) as ProgressBar
+
+        titleText.text = placeList!![position].placeName + ": " + placeList!![position].currentOccupancy + " / " + placeList!![position].maxOccupancy
+        //imageView.setImageResource(imgid[position])
+        progressBar.progress = ((placeList!![position].currentOccupancy.toFloat() / placeList!![position].maxOccupancy.toFloat()) * 100).toInt()
+
+        return rowView
     }
 
     // Filter Class

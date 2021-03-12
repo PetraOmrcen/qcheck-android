@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.Observer
 import com.example.myapplication.data.network.PlaceApi
 import com.example.myapplication.data.network.Resource
@@ -13,6 +15,8 @@ import com.example.myapplication.data.repository.PlaceRepository
 import com.example.myapplication.data.responses.Place
 import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.ui.base.BaseFragment
+import kotlinx.android.synthetic.main.fragment_search.*
+
 
 class SearchFragment() : BaseFragment<SearchViewModel, FragmentSearchBinding, PlaceRepository>() {
 
@@ -28,16 +32,17 @@ class SearchFragment() : BaseFragment<SearchViewModel, FragmentSearchBinding, Pl
         viewModel.places.observe(viewLifecycleOwner, Observer { it ->
             when (it) {
                 is Resource.Success -> {
-                    for (element in it.value)
-                    {
+                    for (element in it.value) {
                         arraylist.add(element)
                     }
                     adapter = ListViewAdapter(mContext, arraylist)
                     binding.listview.adapter = adapter
                     binding.simpleSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                         override fun onQueryTextChange(newText: String): Boolean {
+                            adapter.filter(newText)
                             return false
                         }
+
                         override fun onQueryTextSubmit(query: String): Boolean {
                             adapter.filter(query)
                             return false
@@ -50,6 +55,7 @@ class SearchFragment() : BaseFragment<SearchViewModel, FragmentSearchBinding, Pl
             }
         })
     }
+
 
     override fun getViewModel() = SearchViewModel::class.java
 
