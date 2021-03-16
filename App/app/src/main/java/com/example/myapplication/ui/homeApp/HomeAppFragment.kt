@@ -13,20 +13,20 @@ import com.example.myapplication.R
 
 class HomeAppFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeAppViewModel
+    private lateinit var homeAppViewModel: HomeAppViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
+        homeAppViewModel =
             ViewModelProvider(this).get(HomeAppViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_homeapp, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        //val textView: TextView = root.findViewById(R.id.text_home)
+//        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+//            textView.text = it
+//        })
         return root
     }
 }

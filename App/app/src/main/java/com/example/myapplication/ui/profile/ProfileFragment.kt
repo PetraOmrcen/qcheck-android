@@ -11,6 +11,7 @@ import android.widget.Button
 import com.example.myapplication.R
 import com.example.myapplication.ui.auth.AuthActivity
 import com.example.myapplication.ui.auth.LoginActivity
+import com.example.myapplication.ui.place.PlaceActivity
 
 class ProfileFragment : Fragment() {
 
@@ -36,6 +37,12 @@ class ProfileFragment : Fragment() {
         btn_new_activity2.setOnClickListener{
 
             startActivity(Intent(context, LoginActivity::class.java))
+        }
+
+        var btn_new_activity3 = root.findViewById(R.id.place_button) as Button
+        btn_new_activity3.setOnClickListener{
+
+            startActivity(Intent(context, PlaceActivity::class.java))
         }
 
 
