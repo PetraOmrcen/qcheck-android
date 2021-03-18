@@ -2,6 +2,7 @@ package com.example.myapplication.ui.map
 
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ import com.example.myapplication.data.responses.Place
 import com.example.myapplication.databinding.FragmentMapBinding
 import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.ui.base.BaseFragment
+import com.example.myapplication.ui.place.PlaceActivity
 import com.example.myapplication.ui.search.ListViewAdapter
 import com.example.myapplication.ui.search.SearchViewModel
 import com.google.android.gms.maps.*
@@ -30,6 +32,7 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.Marker
 
 
 class MapFragment() : BaseFragment<MapViewModel, FragmentMapBinding, PlaceRepository>(), OnMapReadyCallback {
@@ -42,6 +45,7 @@ class MapFragment() : BaseFragment<MapViewModel, FragmentMapBinding, PlaceReposi
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     private var arraylist = ArrayList<Place>()
+    private var markers = ArrayList<Marker?>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -96,6 +100,8 @@ class MapFragment() : BaseFragment<MapViewModel, FragmentMapBinding, PlaceReposi
         googleMap?.moveCamera(CameraUpdateFactory.zoomTo(15F))
         googleMap?.moveCamera((CameraUpdateFactory.newLatLng(defaultLocation)))
 
+
+
         viewModel.places.observe(viewLifecycleOwner, Observer { it ->
             when (it) {
                 is Resource.Success -> {
@@ -103,12 +109,21 @@ class MapFragment() : BaseFragment<MapViewModel, FragmentMapBinding, PlaceReposi
                     {
                         arraylist.add(element)
                         val elLocation = LatLng(element.latitude, element.longitude)
-                        googleMap?.addMarker(MarkerOptions().position(elLocation).title(element.placeName).snippet(element.currentOccupancy.toString() + " / " + element.maxOccupancy.toString()))
-
+                        markers.add(
+                                googleMap?.addMarker(
+                                        MarkerOptions().position(elLocation).title(element.placeName).snippet(
+                                                element.currentOccupancy.toString() + " / " + element.maxOccupancy.toString())))
                     }
                 }
             }
         })
+
+        googleMap?.setOnInfoWindowClickListener {
+            val intent = Intent(context, PlaceActivity::class.java)
+            var place = arraylist.get(markers.indexOf(it))
+            intent.putExtra("PlaceId", place.id)
+            startActivity(intent)
+        }
     }
 
     private fun getLocationPermission() {

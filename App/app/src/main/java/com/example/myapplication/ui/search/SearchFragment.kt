@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.search
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.example.myapplication.data.repository.PlaceRepository
 import com.example.myapplication.data.responses.Place
 import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.ui.base.BaseFragment
+import com.example.myapplication.ui.place.PlaceActivity
 import kotlinx.android.synthetic.main.fragment_search.*
 
 
@@ -28,6 +30,12 @@ class SearchFragment() : BaseFragment<SearchViewModel, FragmentSearchBinding, Pl
         super.onViewCreated(view, savedInstanceState)
         viewModel.getPlaces()
         mContext = this.requireContext()
+
+        binding.listview.setOnItemClickListener { parent, view, position, id ->
+            val intent = Intent(mContext, PlaceActivity::class.java)
+            intent.putExtra("PlaceId", adapter.getItemId(position))
+            startActivity(intent)
+        }
 
         viewModel.places.observe(viewLifecycleOwner, Observer { it ->
             when (it) {

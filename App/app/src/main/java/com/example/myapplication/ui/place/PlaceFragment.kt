@@ -2,32 +2,61 @@ package com.example.myapplication.ui.place
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.myapplication.R
+import androidx.lifecycle.Observer
+import com.example.myapplication.data.network.PlaceApi
+import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.repository.PlaceRepository
-import com.example.myapplication.databinding.FragmentSearchBinding
+import com.example.myapplication.data.responses.Place
+import com.example.myapplication.databinding.FragmentPlaceBinding
 import com.example.myapplication.ui.base.BaseFragment
-import com.example.myapplication.ui.homeApp.HomeAppViewModel
 
-class PlaceFragment : Fragment() {
+class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRepository>() {
 
-    private lateinit var placeViewModel: PlaceViewModel
+    private lateinit var place : Place
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        placeViewModel =
-                ViewModelProvider(this).get(PlaceViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_place, container, false)
-        //val textView: TextView = root.findViewById(R.id.text_home)
-//        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
-        return root
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val placeId = (activity as PlaceActivity).placeId
+
+        viewModel.getPlace(placeId)
+
+
+
+        viewModel.place.observe(viewLifecycleOwner, Observer { it ->
+            when (it) {
+                is Resource.Success -> {
+                    place = it.value
+
+                    binding.textViewProgress.text = place.currentOccupancy.toString() + " / " + place.maxOccupancy.toString()
+                    binding.textViewPlaceName.text = place.placeName
+                    binding.progressBar.progress = ((place.currentOccupancy.toFloat() / place.maxOccupancy.toFloat()) * 100).toInt()
+                }
+                is Resource.Loading -> {
+                    //binding.progressbar.visible(true)
+                }
+            }
+        })
+
+        binding.buttonDecr.setOnClickListener(){
+            place.currentOccupancy -= 1
+            viewModel.changeOccupancy(place.id, place)
+        }
+
+        binding.buttonIncr.setOnClickListener(){
+            place.currentOccupancy += 1
+            viewModel.changeOccupancy(place.id, place)
+        }
     }
+
+    override fun getViewModel() = PlaceViewModel::class.java
+
+    override fun getFragmentBinding(
+            inflater: LayoutInflater,
+            container: ViewGroup?
+    ) = FragmentPlaceBinding.inflate(inflater, container, false)
+
+    override fun getFragmentRepository()=
+            PlaceRepository(remoteDataSource.buildApi(PlaceApi::class.java))
 }
