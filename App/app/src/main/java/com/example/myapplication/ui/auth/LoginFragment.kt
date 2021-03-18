@@ -7,6 +7,8 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
+import com.example.myapplication.R
 import com.example.myapplication.data.network.AuthApi
 import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.repository.AuthRepository
@@ -46,6 +48,10 @@ class  LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRep
 
             binding.buttonLogin.setOnClickListener {
                 login() //pozovem fju ispod
+            }
+
+            binding.textViewRegisterNow.setOnClickListener{
+                Navigation.findNavController(binding.root).navigate(R.id.action_loginFragment_to_registerFragment)
             }
         }
 
