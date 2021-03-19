@@ -2,9 +2,6 @@ package com.example.myapplication.data.repository
 
 import com.example.myapplication.data.network.PlaceApi
 import com.example.myapplication.data.responses.Place
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class PlaceRepository (private val api: PlaceApi) : BaseRepository() {
 

@@ -4,39 +4,34 @@ package com.example.myapplication.ui.map
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import com.example.myapplication.R
-import android.location.Location
-import android.widget.SearchView
 import androidx.lifecycle.Observer
+import com.example.myapplication.R
 import com.example.myapplication.data.network.PlaceApi
 import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.repository.PlaceRepository
 import com.example.myapplication.data.responses.Place
 import com.example.myapplication.databinding.FragmentMapBinding
-import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.ui.base.BaseFragment
 import com.example.myapplication.ui.place.PlaceActivity
-import com.example.myapplication.ui.search.ListViewAdapter
-import com.example.myapplication.ui.search.SearchViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.Marker
 
 
-class MapFragment() : BaseFragment<MapViewModel, FragmentMapBinding, PlaceRepository>(), OnMapReadyCallback {
-    var mMapView: MapView? = null
+class MapFragment : BaseFragment<MapViewModel, FragmentMapBinding, PlaceRepository>(), OnMapReadyCallback {
+    private var mMapView: MapView? = null
     private var googleMap: GoogleMap? = null
     private var locationPermissionGranted = false
     private lateinit var placesClient: PlacesClient
@@ -120,7 +115,7 @@ class MapFragment() : BaseFragment<MapViewModel, FragmentMapBinding, PlaceReposi
 
         googleMap?.setOnInfoWindowClickListener {
             val intent = Intent(context, PlaceActivity::class.java)
-            var place = arraylist.get(markers.indexOf(it))
+            val place = arraylist[markers.indexOf(it)]
             intent.putExtra("PlaceId", place.id)
             startActivity(intent)
         }

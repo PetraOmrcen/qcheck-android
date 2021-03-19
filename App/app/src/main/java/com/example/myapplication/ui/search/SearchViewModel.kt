@@ -2,12 +2,9 @@ package com.example.myapplication.ui.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.network.Resource
-import com.example.myapplication.data.repository.AuthRepository
 import com.example.myapplication.data.repository.PlaceRepository
-import com.example.myapplication.data.responses.LoginResponse
 import com.example.myapplication.data.responses.Place
 import com.example.myapplication.ui.base.BaseViewModel
 import kotlinx.coroutines.launch

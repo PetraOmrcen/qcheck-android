@@ -3,7 +3,6 @@ package com.example.myapplication.ui.auth
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +19,9 @@ import com.example.myapplication.ui.home.HomeActivity
 
 
 class  LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepository>() {
+
+        var email: String = ""
+        var password: String = ""
 
         override fun onActivityCreated(savedInstanceState: Bundle?) {
             super.onActivityCreated(savedInstanceState)
@@ -40,14 +42,25 @@ class  LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRep
                 }
             })
 
+            binding.editTextTextEmailAddress.addTextChangedListener {
+                email = it.toString()
+                if(isEmailValid(email) && password.isNotEmpty() && email.isNotEmpty()) {
+                    binding.buttonLogin.enable(true)
+                }
+                else binding.buttonLogin.enable(false)
+            }
+
             binding.editTextTextPassword.addTextChangedListener {
-                val email = binding.editTextTextEmailAddress.text.toString().trim()
-                binding.buttonLogin.enable(email.isNotEmpty() && it.toString().isNotEmpty())
+                password = it.toString()
+                if(isEmailValid(email) && password.isNotEmpty() && email.isNotEmpty()) {
+                    binding.buttonLogin.enable(true)
+                }
+                else binding.buttonLogin.enable(false)
             }
 
 
             binding.buttonLogin.setOnClickListener {
-                login() //pozovem fju ispod
+                login()
             }
 
             binding.textViewRegisterNow.setOnClickListener{
@@ -55,10 +68,14 @@ class  LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRep
             }
         }
 
+        private fun isEmailValid(email: String): Boolean {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        }
+
         private fun login() {
-            val email = binding.editTextTextEmailAddress.text.toString().trim()
-            val password = binding.editTextTextPassword.text.toString().trim()
-            //binding.progressbar.visible(true)
+            email = binding.editTextTextEmailAddress.text.toString().trim()
+            password = binding.editTextTextPassword.text.toString().trim()
+            binding.progressbar.visible(true)
             viewModel.login(email, password)
         }
 

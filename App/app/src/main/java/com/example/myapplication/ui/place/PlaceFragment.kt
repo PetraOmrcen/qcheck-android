@@ -24,10 +24,10 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
 
 
 
-        viewModel.place.observe(viewLifecycleOwner, Observer { it ->
+        viewModel.place.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    place = it.value
+                    this.place = it.value
 
                     binding.textViewProgress.text = place.currentOccupancy.toString() + " / " + place.maxOccupancy.toString()
                     binding.textViewPlaceName.text = place.placeName
@@ -39,12 +39,12 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
             }
         })
 
-        binding.buttonDecr.setOnClickListener(){
+        binding.buttonDecr.setOnClickListener{
             place.currentOccupancy -= 1
             viewModel.changeOccupancy(place.id, place)
         }
 
-        binding.buttonIncr.setOnClickListener(){
+        binding.buttonIncr.setOnClickListener{
             place.currentOccupancy += 1
             viewModel.changeOccupancy(place.id, place)
         }

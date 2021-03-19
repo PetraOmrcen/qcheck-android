@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.network.Resource
 import kotlinx.coroutines.launch
-
 import com.example.myapplication.data.repository.AuthRepository
 import com.example.myapplication.data.responses.LoginResponse
 import com.example.myapplication.ui.base.BaseViewModel

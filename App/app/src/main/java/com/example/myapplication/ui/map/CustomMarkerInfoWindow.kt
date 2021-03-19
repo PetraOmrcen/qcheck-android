@@ -11,7 +11,7 @@ import com.google.android.gms.maps.model.Marker
 
 class CustomInfoWindowForGoogleMap(context: Context) : GoogleMap.InfoWindowAdapter {
 
-    var mWindow = (context as Activity).layoutInflater.inflate(R.layout.marker_info, null)
+    private var mWindow: View = (context as Activity).layoutInflater.inflate(R.layout.marker_info, null)
 
     private fun rendowWindowText(marker: Marker, view: View){
 
@@ -33,7 +33,7 @@ class CustomInfoWindowForGoogleMap(context: Context) : GoogleMap.InfoWindowAdapt
         return mWindow
     }
 
-    override fun getInfoWindow(marker: Marker): View? {
+    override fun getInfoWindow(marker: Marker): View {
         rendowWindowText(marker, mWindow)
         return mWindow
     }

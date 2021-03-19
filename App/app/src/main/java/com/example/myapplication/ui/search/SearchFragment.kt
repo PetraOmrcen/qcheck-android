@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.Observer
 import com.example.myapplication.data.network.PlaceApi
 import com.example.myapplication.data.network.Resource
@@ -17,10 +15,9 @@ import com.example.myapplication.data.responses.Place
 import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.ui.base.BaseFragment
 import com.example.myapplication.ui.place.PlaceActivity
-import kotlinx.android.synthetic.main.fragment_search.*
 
 
-class SearchFragment() : BaseFragment<SearchViewModel, FragmentSearchBinding, PlaceRepository>() {
+class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding, PlaceRepository>() {
 
     private lateinit var adapter: ListViewAdapter
     private var arraylist = ArrayList<Place>()
@@ -37,7 +34,7 @@ class SearchFragment() : BaseFragment<SearchViewModel, FragmentSearchBinding, Pl
             startActivity(intent)
         }
 
-        viewModel.places.observe(viewLifecycleOwner, Observer { it ->
+        viewModel.places.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     for (element in it.value) {

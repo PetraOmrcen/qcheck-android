@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.example.myapplication.R
@@ -21,10 +20,6 @@ class ListViewAdapter(var mContext: Context,
     private var placeList: MutableList<Place>? = null
     private var arraylist: ArrayList<Place>
 
-    inner class ViewHolder {
-        var name: TextView? = null
-    }
-
     override fun getCount(): Int {
         return placeList!!.size
     }
@@ -34,30 +29,16 @@ class ListViewAdapter(var mContext: Context,
     }
 
     override fun getItemId(position: Int): Long {
-        return placeList!![position].id.toLong()
+        return placeList!![position].id
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
-//        var convertView = convertView
-//        var viewHolder: ViewHolder
-//        if (convertView == null) {
-//            viewHolder = ViewHolder()
-//            val layoutInflater = mContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//            convertView = layoutInflater.inflate(R.layout.listview_item, null)
-//
-//            viewHolder.name = convertView.findViewById(R.id.title)
-//
-//            convertView.tag = viewHolder
-//        } else {
-//            viewHolder = convertView.tag as ViewHolder
-//        }
-//        viewHolder.name?.text = placeList!![position].placeName + ": " + placeList!![position].currentOccupancy + " / " + placeList!![position].maxOccupancy
 
         val inflater = mContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val rowView = inflater.inflate(R.layout.listview_item, null, true)
 
         val titleText = rowView.findViewById(R.id.title) as TextView
-        val imageView = rowView.findViewById(R.id.icon) as ImageView
+        //val imageView = rowView.findViewById(R.id.icon) as ImageView
         val progressBar = rowView.findViewById(R.id.capacityProgressBar) as ProgressBar
 
         titleText.text = placeList!![position].placeName + ": " + placeList!![position].currentOccupancy + " / " + placeList!![position].maxOccupancy
@@ -69,14 +50,14 @@ class ListViewAdapter(var mContext: Context,
 
     // Filter Class
     fun filter(charText: String) {
-        var charText = charText
-        charText = charText.toLowerCase()
+        var text = charText
+        text = text.toLowerCase(Locale.ROOT)
         placeList!!.clear()
-        if (charText.isEmpty()) {
+        if (text.isEmpty()) {
             placeList!!.addAll(arraylist)
         } else {
             for (wp in arraylist) {
-                if (wp.placeName.toLowerCase(Locale.getDefault()).contains(charText)) {
+                if (wp.placeName.toLowerCase(Locale.getDefault()).contains(text)) {
                     placeList!!.add(wp)
                 }
             }
