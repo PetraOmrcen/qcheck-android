@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.network.UserApi
 import com.example.myapplication.data.repository.UserRepository
@@ -12,6 +13,7 @@ import com.example.myapplication.data.responses.User
 import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.ui.base.BaseFragment
 import com.example.myapplication.ui.visible
+import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
@@ -23,19 +25,22 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding, UserReposi
 
         binding.progressbar.visible(false)
 
-        viewModel.getUser()
+        //viewModel.getUser()
 
         viewModel.user.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     binding.progressbar.visible(false)
-                    updateUI(it.value.user)
+                    //updateUI(it.value.user)
+                    //binding.textViewName.text = runBlocking { userPreferences.authToken.first() }
                 }
                 is Resource.Loading -> {
                     binding.progressbar.visible(true)
                 }
             }
         })
+
+        binding.textViewName.text = runBlocking { userPreferences.authToken.first() }
 
         binding.buttonLogout.setOnClickListener {
             logout()

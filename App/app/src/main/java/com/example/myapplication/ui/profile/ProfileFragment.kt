@@ -7,40 +7,45 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.data.UserPreferences
+import com.example.myapplication.data.network.PlaceApi
+import com.example.myapplication.data.network.UserApi
+import com.example.myapplication.data.repository.PlaceRepository
+import com.example.myapplication.data.repository.UserRepository
+import com.example.myapplication.databinding.FragmentPlaceBinding
+import com.example.myapplication.databinding.FragmentProfileBinding
 import com.example.myapplication.ui.auth.AuthActivity
+import com.example.myapplication.ui.base.BaseFragment
+import com.example.myapplication.ui.place.PlaceViewModel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, UserRepository>() {
 
-    private lateinit var profileViewModel: ProfileViewModel
+    private lateinit var  authToken: String
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        startActivity(Intent(context, AuthActivity::class.java))
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
-        profileViewModel =
-            ViewModelProvider(this).get(ProfileViewModel::class.java)
+        authToken = runBlocking { userPreferences.authToken.first() }.toString()
 
-        //val root = inflater.inflate(R.layout.fragment_profile, container, false)
-//
-//        val registerButton = root.findViewById(R.id.register_button) as Button
-//        registerButton.setOnClickListener{
-//            startActivity(Intent(context, AuthActivity::class.java))
-//         }
-//
-//        val loginButton = root.findViewById(R.id.login_button) as Button
-//        loginButton.setOnClickListener{
-//            startActivity(Intent(context, AuthActivity::class.java))
-//        }
-//
-//        val placeButton = root.findViewById(R.id.place_button) as Button
-//        placeButton.setOnClickListener{
-//            startActivity(Intent(context, PlaceActivity::class.java))
-//        }
+        if(authToken == "null") {
+            startActivity(Intent(context, AuthActivity::class.java))
+        }
 
-        return null
+        binding.textViewToken.text = authToken
+
+
     }
+
+    override fun getViewModel() = ProfileViewModel::class.java
+
+    override fun getFragmentBinding(
+            inflater: LayoutInflater,
+            container: ViewGroup?
+    ) = FragmentProfileBinding.inflate(inflater, container, false)
+
+    override fun getFragmentRepository()=
+            UserRepository(remoteDataSource.buildApi(UserApi::class.java))
 
 }

@@ -12,7 +12,7 @@ class AuthRepository(
         email: String,
         password: String
     ) = safeApiCall {
-        api.login(email, password)
+        api.login()//"password", email, password)
     }
 
     suspend fun saveAuthToken(token: String){

@@ -8,8 +8,8 @@ interface PlaceApi {
     @GET("place")
     suspend fun getPlaces(): List<Place>
 
-    @GET("place/{path_variable}")
-    suspend fun getPlace(@Path("path_variable") PlaceId : Long): Place
+    @GET("place/{id}")
+    suspend fun getPlace(@Path("id") PlaceId : Long): Place
 
     @Headers("Content-Type: application/json")
     @PUT("place/{id}")

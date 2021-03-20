@@ -10,6 +10,7 @@ import com.example.myapplication.ui.auth.AuthViewModel
 import com.example.myapplication.ui.home.HomeViewModel
 import com.example.myapplication.ui.map.MapViewModel
 import com.example.myapplication.ui.place.PlaceViewModel
+import com.example.myapplication.ui.profile.ProfileViewModel
 import com.example.myapplication.ui.search.SearchViewModel
 import java.lang.IllegalArgumentException
 
@@ -25,6 +26,7 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(repository as PlaceRepository) as T
             modelClass.isAssignableFrom(MapViewModel::class.java) -> MapViewModel(repository as PlaceRepository) as T
             modelClass.isAssignableFrom(PlaceViewModel::class.java) -> PlaceViewModel(repository as PlaceRepository) as T
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> ProfileViewModel(repository as UserRepository) as T
             else -> throw IllegalArgumentException("ViewModelClass Not Found")
         }
     }

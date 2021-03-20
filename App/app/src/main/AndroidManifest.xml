@@ -28,6 +28,10 @@
         <activity
             android:name=".ui.place.PlaceActivity"
             android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:parentActivityName=".MainActivity" />
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.

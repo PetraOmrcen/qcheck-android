@@ -7,6 +7,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
+import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.data.network.AuthApi
 import com.example.myapplication.data.network.Resource
@@ -34,8 +35,8 @@ class  LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRep
                 when (it) {
                     is Resource.Success -> {
                         lifecycleScope.launch {
-                            viewModel.saveAuthToken(it.value.user.access_token!!)
-                            requireActivity().startNewActivity(HomeActivity::class.java)
+                            viewModel.saveAuthToken(it.value.access_token)
+                            requireActivity().startNewActivity(MainActivity::class.java)
                         }
                     }
                     is Resource.Failure -> handleApiError(it) { login() }

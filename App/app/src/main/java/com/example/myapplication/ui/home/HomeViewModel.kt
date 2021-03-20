@@ -3,6 +3,7 @@ package com.example.myapplication.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.data.responses.LoginResponse
@@ -19,7 +20,7 @@ class HomeViewModel(
 
     fun getUser() = viewModelScope.launch {
         _user.value = Resource.Loading
-        _user.value = repository.getUser()
+        //_user.value = repository.getUser()
     }
 
 }
