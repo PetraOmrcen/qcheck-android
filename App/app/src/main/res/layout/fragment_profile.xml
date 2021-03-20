@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/textViewProfile"
-        android:layout_width="288dp"
-        android:layout_height="63dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
         android:backgroundTint="@color/colorTextWhite"
         android:text="Welcome user"
@@ -31,5 +31,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewProfile" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewToken" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

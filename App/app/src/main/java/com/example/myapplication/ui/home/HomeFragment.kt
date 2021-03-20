@@ -50,7 +50,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding, UserReposi
     private fun updateUI(user: User) {
         with(binding) {
             textViewId.text = user.id.toString()
-            textViewName.text = user.name
+            textViewName.text = user.firstName
             textViewEmail.text = user.email
         }
     }
