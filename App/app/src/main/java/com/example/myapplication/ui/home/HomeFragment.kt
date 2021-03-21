@@ -4,67 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import com.example.myapplication.data.UserPreferences
-import com.example.myapplication.data.network.Resource
-import com.example.myapplication.data.network.UserApi
-import com.example.myapplication.data.repository.UserRepository
-import com.example.myapplication.data.responses.User
-import com.example.myapplication.databinding.FragmentHomeBinding
-import com.example.myapplication.ui.base.BaseFragment
-import com.example.myapplication.ui.visible
-import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
-
-class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding, UserRepository>() {
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.R
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+class HomeFragment : Fragment() {
 
-        binding.progressbar.visible(false)
+    private lateinit var homeViewModel: HomeViewModel
 
-        //viewModel.getUser()
-
-        viewModel.user.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is Resource.Success -> {
-                    binding.progressbar.visible(false)
-                    //updateUI(it.value.user)
-                    //binding.textViewName.text = runBlocking { userPreferences.authToken.first() }
-                }
-                is Resource.Loading -> {
-                    binding.progressbar.visible(true)
-                }
-            }
-        })
-
-        binding.textViewName.text = runBlocking { userPreferences.authToken.first() }
-
-        binding.buttonLogout.setOnClickListener {
-            logout()
-        }
-    }
-
-    private fun updateUI(user: User) {
-        with(binding) {
-            textViewId.text = user.id.toString()
-            textViewName.text = user.firstName
-            textViewEmail.text = user.email
-        }
-    }
-
-    override fun getViewModel() = HomeViewModel::class.java
-
-    override fun getFragmentBinding(
+    override fun onCreateView(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ) = FragmentHomeBinding.inflate(inflater, container, false)
-
-    override fun getFragmentRepository(): UserRepository {
-        val token = runBlocking { userPreferences.authToken.first() }
-        val api = remoteDataSource.buildApi(UserApi::class.java, token)
-        return UserRepository(api)
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        homeViewModel =
+            ViewModelProvider(this).get(HomeViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        return root
     }
 }

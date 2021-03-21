@@ -7,7 +7,6 @@ import com.example.myapplication.data.repository.BaseRepository
 import com.example.myapplication.data.repository.PlaceRepository
 import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.ui.auth.AuthViewModel
-import com.example.myapplication.ui.home.HomeViewModel
 import com.example.myapplication.ui.map.MapViewModel
 import com.example.myapplication.ui.place.PlaceViewModel
 import com.example.myapplication.ui.profile.ProfileViewModel

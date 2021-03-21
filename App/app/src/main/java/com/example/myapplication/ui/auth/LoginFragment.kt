@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 import com.example.myapplication.databinding.FragmentLoginBinding
 import com.example.myapplication.ui.*
 import com.example.myapplication.ui.base.BaseFragment
-import com.example.myapplication.ui.home.HomeActivity
 
 
 class  LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepository>() {

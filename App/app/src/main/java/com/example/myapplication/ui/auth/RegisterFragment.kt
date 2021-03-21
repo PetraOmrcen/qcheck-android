@@ -11,6 +11,7 @@ import com.example.myapplication.data.repository.AuthRepository
 import com.example.myapplication.databinding.FragmentRegisterBinding
 import com.example.myapplication.ui.base.BaseFragment
 import com.example.myapplication.ui.enable
+import com.example.myapplication.ui.visible
 
 class RegisterFragment : BaseFragment<AuthViewModel, FragmentRegisterBinding, AuthRepository>() {
 
@@ -20,6 +21,9 @@ class RegisterFragment : BaseFragment<AuthViewModel, FragmentRegisterBinding, Au
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        binding.progressbar.visible(false)
+        binding.buttonRegister.enable(false)
 
         binding.textViewLoginNow.setOnClickListener{
             Navigation.findNavController(binding.root).navigate(R.id.action_registerFragment_to_loginFragment)
