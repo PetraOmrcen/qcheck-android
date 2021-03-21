@@ -21,7 +21,6 @@ class ViewModelFactory(
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(AuthViewModel::class.java) -> AuthViewModel(repository as AuthRepository) as T
-            modelClass.isAssignableFrom(HomeViewModel::class.java) -> HomeViewModel(repository as UserRepository) as T
             modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(repository as PlaceRepository) as T
             modelClass.isAssignableFrom(MapViewModel::class.java) -> MapViewModel(repository as PlaceRepository) as T
             modelClass.isAssignableFrom(PlaceViewModel::class.java) -> PlaceViewModel(repository as PlaceRepository) as T

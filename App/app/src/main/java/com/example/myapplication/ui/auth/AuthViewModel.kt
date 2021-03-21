@@ -7,6 +7,7 @@ import com.example.myapplication.data.network.Resource
 import kotlinx.coroutines.launch
 import com.example.myapplication.data.repository.AuthRepository
 import com.example.myapplication.data.responses.LoginResponse
+import com.example.myapplication.data.responses.RegisterResponse
 import com.example.myapplication.ui.base.BaseViewModel
 
 class AuthViewModel(
@@ -17,12 +18,26 @@ class AuthViewModel(
     val loginResponse: LiveData<Resource<LoginResponse>>
         get() = _loginResponse
 
+    private val _registerResponse: MutableLiveData<Resource<RegisterResponse>> = MutableLiveData()
+    val registerResponse: LiveData<Resource<RegisterResponse>>
+        get() = _registerResponse
+
     fun login(
         email: String,
         password: String
     ) = viewModelScope.launch {
         _loginResponse.value = Resource.Loading
         _loginResponse.value = repository.login(email, password)
+    }
+
+    fun register(
+            email: String,
+            password: String,
+            firstName: String,
+            lastName: String
+    ) = viewModelScope.launch {
+        _registerResponse.value = Resource.Loading
+        _registerResponse.value = repository.register(email, password, firstName, lastName)
     }
 
     suspend fun saveAuthToken(token: String) {

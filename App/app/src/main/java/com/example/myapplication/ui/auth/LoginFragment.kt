@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import com.example.myapplication.databinding.FragmentLoginBinding
 import com.example.myapplication.ui.*
 import com.example.myapplication.ui.base.BaseFragment
+import kotlinx.coroutines.delay
 
 
 class  LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepository>() {
@@ -35,6 +36,9 @@ class  LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRep
                     is Resource.Success -> {
                         lifecycleScope.launch {
                             viewModel.saveAuthToken(it.value.access_token)
+                            binding.progressbar.enable(true)
+                            requireView().snackbar("Successful login!")
+                            delay(1000)
                             requireActivity().startNewActivity(MainActivity::class.java)
                         }
                     }

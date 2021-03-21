@@ -1,6 +1,9 @@
 package com.example.myapplication.data.network
 
 import com.example.myapplication.data.responses.LoginResponse
+import com.example.myapplication.data.responses.Place
+import com.example.myapplication.data.responses.RegisterRequest
+import com.example.myapplication.data.responses.RegisterResponse
 import retrofit2.http.*
 
 interface AuthApi {
@@ -13,4 +16,10 @@ interface AuthApi {
             @Field("username") username: String,
             @Field("password") password: String
     ) : LoginResponse
+
+    @POST("app_user")
+    suspend fun register(
+            @Body user: RegisterRequest
+    ) : RegisterResponse
+
 }
