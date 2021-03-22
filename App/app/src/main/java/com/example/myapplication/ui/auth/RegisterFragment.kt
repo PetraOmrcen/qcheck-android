@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.auth
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -38,6 +39,8 @@ class RegisterFragment : BaseFragment<AuthViewModel, FragmentRegisterBinding, Au
 
         binding.editTextTextEmailAddress.addTextChangedListener {
             email = it.toString()
+            if(!isEmailValid(email)) binding.textViewMailRegister.setTextColor(Color.RED)
+            else binding.textViewMailRegister.setTextColor(Color.BLACK)
             if(isEmailValid(email) && isNameValid(name) && password.isNotEmpty() && email.isNotEmpty() && name.isNotEmpty()) {
                 binding.buttonRegister.enable(true)
             }
@@ -46,6 +49,8 @@ class RegisterFragment : BaseFragment<AuthViewModel, FragmentRegisterBinding, Au
 
         binding.editTextTextPassword.addTextChangedListener {
             password = it.toString()
+            if(password.isEmpty()) binding.textViewPassRegister.setTextColor(Color.RED)
+            else binding.textViewPassRegister.setTextColor(Color.BLACK)
             if(isEmailValid(email) && isNameValid(name) && password.isNotEmpty() && email.isNotEmpty() && name.isNotEmpty()) {
                 binding.buttonRegister.enable(true)
             }
@@ -54,6 +59,8 @@ class RegisterFragment : BaseFragment<AuthViewModel, FragmentRegisterBinding, Au
 
         binding.editTextTextPersonName.addTextChangedListener {
             name = it.toString()
+            if(name.isEmpty()) binding.textViewNameRegister.setTextColor(Color.RED)
+            else binding.textViewNameRegister.setTextColor(Color.BLACK)
             if(isEmailValid(email) && isNameValid(name) && password.isNotEmpty() && email.isNotEmpty() && name.isNotEmpty()) {
                 binding.buttonRegister.enable(true)
             }

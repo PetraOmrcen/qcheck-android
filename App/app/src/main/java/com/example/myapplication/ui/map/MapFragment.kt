@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import com.example.myapplication.Global
 import com.example.myapplication.R
 import com.example.myapplication.data.network.PlaceApi
 import com.example.myapplication.data.network.Resource
@@ -114,6 +115,7 @@ class MapFragment : BaseFragment<MapViewModel, FragmentMapBinding, PlaceReposito
         })
 
         googleMap?.setOnInfoWindowClickListener {
+            Global.fragmentStack.add(R.id.navigation_map)
             val intent = Intent(context, PlaceActivity::class.java)
             val place = arraylist[markers.indexOf(it)]
             intent.putExtra("PlaceId", place.id)

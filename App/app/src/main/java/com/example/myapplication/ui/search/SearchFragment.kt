@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.lifecycle.Observer
+import com.example.myapplication.Global
+import com.example.myapplication.R
 import com.example.myapplication.data.network.PlaceApi
 import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.repository.PlaceRepository
@@ -29,6 +31,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding, Plac
         mContext = this.requireContext()
 
         binding.listview.setOnItemClickListener { parent, view, position, id ->
+            Global.fragmentStack.add(R.id.navigation_search)
             val intent = Intent(mContext, PlaceActivity::class.java)
             intent.putExtra("PlaceId", adapter.getItemId(position))
             startActivity(intent)

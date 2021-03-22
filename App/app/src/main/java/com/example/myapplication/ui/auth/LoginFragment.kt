@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.auth
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -48,6 +49,8 @@ class  LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRep
 
             binding.editTextTextEmailAddress.addTextChangedListener {
                 email = it.toString()
+                if(!isEmailValid(email)) binding.textViewMail.setTextColor(Color.RED)
+                else binding.textViewMail.setTextColor(Color.BLACK)
                 if(isEmailValid(email) && password.isNotEmpty() && email.isNotEmpty()) {
                     binding.buttonLogin.enable(true)
                 }
@@ -56,6 +59,8 @@ class  LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRep
 
             binding.editTextTextPassword.addTextChangedListener {
                 password = it.toString()
+                if(password.isEmpty()) binding.textViewPass.setTextColor(Color.RED)
+                else binding.textViewPass.setTextColor(Color.BLACK)
                 if(isEmailValid(email) && password.isNotEmpty() && email.isNotEmpty()) {
                     binding.buttonLogin.enable(true)
                 }
