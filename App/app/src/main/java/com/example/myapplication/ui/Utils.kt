@@ -2,7 +2,11 @@ package com.example.myapplication.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.view.View
+import androidx.core.graphics.toColor
 import androidx.fragment.app.Fragment
 import com.auth0.android.jwt.JWT
 import com.example.myapplication.data.network.Resource
@@ -31,6 +35,14 @@ fun makeUserFromJWT(jwt: JWT): User {
     val roleId = jwt.getClaim("authorities").asArray(String::class.java)[0]
     val user = User(null, null, email.toString(), id.toString().toInt(), firstName.toString(), lastName.toString(), roleId.toString() )
     return user
+}
+
+fun translateValueToColor(value: Int): Int {
+    val R = (255 * value) / 100
+    val G = (255 * (100 - value)) / 100
+    val B = 0
+    val color = android.graphics.Color.argb(255, R, G, B)
+    return color
 }
 
 fun View.enable(enabled: Boolean) {
