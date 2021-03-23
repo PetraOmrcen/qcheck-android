@@ -87,5 +87,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
     compileOnly 'com.google.android.wearable:wearable:2.6.0'
 
-
+    //Design
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
