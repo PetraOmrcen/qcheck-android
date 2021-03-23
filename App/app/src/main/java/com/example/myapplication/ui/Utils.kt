@@ -9,6 +9,7 @@ import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.responses.User
 import com.example.myapplication.ui.auth.LoginFragment
 import com.example.myapplication.ui.base.BaseFragment
+import com.example.myapplication.ui.profile.ProfileViewModel
 import com.google.android.material.snackbar.Snackbar
 
 fun <A : Activity> Activity.startNewActivity(activity: Class<A>) {
@@ -27,7 +28,8 @@ fun makeUserFromJWT(jwt: JWT): User {
     val firstName = jwt.getClaim("firstName").asString()
     val lastName = jwt.getClaim("lastName").asString()
     val id = jwt.getClaim("id").asString()
-    val user = User(null, null, email.toString(), id.toString().toInt(), firstName.toString(), lastName.toString(), null )
+    val roleId = jwt.getClaim("authorities").asArray(String::class.java)[0]
+    val user = User(null, null, email.toString(), id.toString().toInt(), firstName.toString(), lastName.toString(), roleId.toString() )
     return user
 }
 
