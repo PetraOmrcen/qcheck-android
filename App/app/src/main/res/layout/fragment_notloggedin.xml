@@ -18,6 +18,7 @@
         android:layout_marginTop="8dp"
         android:backgroundTint="@color/green_medium"
         android:text="Register"
+        android:textColor="@color/colorTextWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
@@ -49,11 +50,11 @@
         android:text="You already have an account?"
         android:textAlignment="viewStart"
         android:textColor="@color/green_blue"
-        android:textSize="20dp"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_button"
-        app:layout_constraintVertical_bias="0.025" />
+        app:layout_constraintVertical_bias="0.076" />
 
     <Button
         android:id="@+id/login_button"
@@ -63,6 +64,7 @@
         android:layout_marginEnd="36dp"
         android:backgroundTint="@color/green_medium"
         android:text="LOGIN"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6"
