@@ -52,7 +52,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, U
             binding.textViewProfile.text =  user.firstName + " " + user.lastName
         }
 
-        binding.button.setOnClickListener {
+        binding.logoutText.setOnClickListener {
             logout()
         }
 
