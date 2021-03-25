@@ -32,6 +32,7 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
                     binding.textViewProgress.text = place.currentOccupancy.toString() + " / " + place.maxOccupancy.toString()
                     binding.textViewPlaceName.text = place.placeName
                     binding.progressBar.progress = ((place.currentOccupancy.toFloat() / place.maxOccupancy.toFloat()) * 100).toInt()
+                    binding.textViewAddressPlace.text = place.address
                 }
                 is Resource.Loading -> {
                     //binding.progressbar.visible(true)

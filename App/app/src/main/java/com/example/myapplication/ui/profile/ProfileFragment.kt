@@ -49,10 +49,10 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, U
             val token = authToken
             val jwt = JWT(token)
             var user = makeUserFromJWT(jwt)
-            binding.textViewProfile.text = "Welcome, \n" + user.firstName + " " + user.lastName
+            binding.textViewProfile.text =  user.firstName + " " + user.lastName
         }
 
-        binding.button.setOnClickListener {
+        binding.logoutText.setOnClickListener {
             logout()
         }
 
