@@ -88,9 +88,9 @@ class MapFragment : BaseFragment<MapViewModel, FragmentMapBinding, PlaceReposito
 
         getLocationPermission()
 
-        //getDeviceLocation()
+        getDeviceLocation()
 
-        //updateLocationUI()
+        updateLocationUI()
 
         googleMap?.setInfoWindowAdapter(activity?.let { CustomInfoWindowForGoogleMap(it) })
         googleMap?.moveCamera(CameraUpdateFactory.zoomTo(15F))
