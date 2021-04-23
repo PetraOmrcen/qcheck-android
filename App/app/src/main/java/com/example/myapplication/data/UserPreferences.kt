@@ -4,6 +4,8 @@ package com.example.myapplication.data
 import android.content.Context
 import androidx.datastore.DataStore
 import androidx.datastore.preferences.*
+import com.example.myapplication.data.responses.User
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -36,5 +38,4 @@ class UserPreferences(
     companion object {
         private val KEY_AUTH = preferencesKey<String>("key_auth")
     }
-
 }

@@ -3,17 +3,16 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.ui.auth.AuthActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -23,6 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var userPreferences: UserPreferences
     private lateinit var  authToken: String
+    var googleAcc: Boolean = false
+    lateinit var  account: GoogleSignInAccount
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,14 +41,17 @@ class MainActivity : AppCompatActivity() {
 
         userPreferences = UserPreferences(this)
         authToken = runBlocking { userPreferences.authToken.first() }.toString()
+        if(GoogleSignIn.getLastSignedInAccount(this) != null){
+            account = GoogleSignIn.getLastSignedInAccount(this)!!
+            googleAcc = true
+        }
 
         navView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_profile -> {
-                    if(authToken == "null") {
+                    if (authToken == "null" && !googleAcc) {
                         startActivity(Intent(this, AuthActivity::class.java))
-                        }
-                    else {
+                    } else {
                         navController.navigate(R.id.navigation_profile)
                     }
                 }
@@ -64,4 +68,5 @@ class MainActivity : AppCompatActivity() {
                R.id.navigation_home, R.id.navigation_map, R.id.navigation_search, R.id.navigation_profile))
          setupActionBarWithNavController(navController, appBarConfiguration)
     }
+
 }

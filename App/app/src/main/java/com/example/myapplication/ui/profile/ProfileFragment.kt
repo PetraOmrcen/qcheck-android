@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.auth0.android.jwt.JWT
+import com.example.myapplication.MainActivity
 import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.data.network.UserApi
 import com.example.myapplication.data.repository.UserRepository
@@ -15,6 +16,9 @@ import com.example.myapplication.ui.auth.AuthActivity
 import com.example.myapplication.ui.base.BaseFragment
 import com.example.myapplication.ui.base.ViewModelFactory
 import com.example.myapplication.ui.makeUserFromJWT
+import com.example.myapplication.ui.place.PlaceActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
@@ -22,6 +26,8 @@ import kotlinx.coroutines.runBlocking
 class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, UserRepository>() {
 
     private lateinit var  authToken: String
+    var googleAcc: Boolean = false
+    lateinit var  account: GoogleSignInAccount
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -31,7 +37,12 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, U
         userPreferences = UserPreferences(requireContext())
         authToken = runBlocking { userPreferences.authToken.first() }.toString()
 
-        if(authToken == "null") {
+        if(GoogleSignIn.getLastSignedInAccount(context) != null){
+            account = GoogleSignIn.getLastSignedInAccount(context)!!
+            googleAcc = true
+        }
+
+        if(authToken == "null" && !googleAcc) {
             startActivity(Intent(context, AuthActivity::class.java))
         }
 
@@ -50,6 +61,10 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, U
             val jwt = JWT(token)
             var user = makeUserFromJWT(jwt)
             binding.textViewProfile.text =  user.firstName + " " + user.lastName
+        }
+
+        if(googleAcc) {
+            binding.textViewProfile.text =  account.givenName + " " + account.familyName
         }
 
         binding.logoutText.setOnClickListener {

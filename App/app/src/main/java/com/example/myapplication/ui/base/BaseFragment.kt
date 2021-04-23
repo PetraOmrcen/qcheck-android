@@ -11,12 +11,15 @@ import androidx.viewbinding.ViewBinding
 import com.example.myapplication.MainActivity
 import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.data.network.RemoteDataSource
-import com.example.myapplication.data.network.UserApi
 import com.example.myapplication.data.repository.BaseRepository
-import com.example.myapplication.ui.auth.AuthActivity
 import com.example.myapplication.ui.startNewActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.OnCompleteListener
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+
 
 abstract class BaseFragment<VM : BaseViewModel, B : ViewBinding, R : BaseRepository> : Fragment() {
 
@@ -27,9 +30,9 @@ abstract class BaseFragment<VM : BaseViewModel, B : ViewBinding, R : BaseReposit
 
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         userPreferences = UserPreferences(requireContext())
         binding = getFragmentBinding(inflater, container)
@@ -45,6 +48,15 @@ abstract class BaseFragment<VM : BaseViewModel, B : ViewBinding, R : BaseReposit
         val authToken = userPreferences.authToken.first()
         //val api = remoteDataSource.buildApi(UserApi::class.java, authToken)
         //viewModel.logout(api)
+
+        var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
+
+        var mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+
+        runBlocking { mGoogleSignInClient.signOut() }
+
         userPreferences.clear()
         requireActivity().startNewActivity(MainActivity::class.java)
     }
