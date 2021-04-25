@@ -9,6 +9,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.myapplication.data.UserPreferences
+import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.databinding.FragmentPlaceBinding
 import com.example.myapplication.ui.auth.AuthActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -24,12 +26,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var  authToken: String
     var googleAcc: Boolean = false
     lateinit var  account: GoogleSignInAccount
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        val navView: BottomNavigationView = binding.navView
 
         val navController: NavController = findNavController(R.id.nav_host_fragment)
 

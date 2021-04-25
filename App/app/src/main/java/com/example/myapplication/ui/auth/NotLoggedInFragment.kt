@@ -1,45 +1,46 @@
 package com.example.myapplication.ui.auth
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.myapplication.R
-import com.example.myapplication.ui.place.PlaceActivity
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
+import com.example.myapplication.data.network.AuthApi
+import com.example.myapplication.data.repository.AuthRepository
+import com.example.myapplication.databinding.FragmentNotloggedinBinding
+import com.example.myapplication.ui.base.BaseFragment
 
 
-class NotLoggedInFragment : Fragment() {
+class NotLoggedInFragment : BaseFragment<AuthViewModel, FragmentNotloggedinBinding, AuthRepository>() {
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
-        val root = inflater.inflate(R.layout.fragment_notloggedin, container, false)
+        val navController = Navigation.findNavController(binding.root)
 
-        val registerButton = root.findViewById(R.id.register_button) as Button
+        val registerButton = binding.registerButton
         registerButton.setOnClickListener{
-            Navigation.findNavController(root).navigate(R.id.action_notloggedinFragment_to_registerFragment)
+            navController.navigate(R.id.action_notloggedinFragment_to_registerFragment)
          }
 
-        val loginButton = root.findViewById(R.id.login_button) as Button
+        val loginButton = binding.loginButton
         loginButton.setOnClickListener{
-            Navigation.findNavController(root).navigate(R.id.action_notloggedinFragment_to_loginFragment)
+            navController.navigate(R.id.action_notloggedinFragment_to_loginFragment)
         }
 
-        val googleButton = root.findViewById(R.id.googleSignInButton) as SignInButton
+        val googleButton = binding.googleSignInButton
         googleButton.setOnClickListener{
             (activity as AuthActivity).googleSignIn()
         }
-
-        return root
     }
+
+    override fun getViewModel() = AuthViewModel::class.java
+
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ) = FragmentNotloggedinBinding.inflate(inflater, container, false)
+
+    override fun getFragmentRepository() =
+        AuthRepository(remoteDataSource.buildApi(AuthApi::class.java), userPreferences)
 }
