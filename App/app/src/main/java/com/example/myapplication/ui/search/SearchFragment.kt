@@ -1,7 +1,6 @@
 package com.example.myapplication.ui.search
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,15 +8,12 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.Global
-import com.example.myapplication.R
 import com.example.myapplication.data.network.PlaceApi
 import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.repository.PlaceRepository
 import com.example.myapplication.data.responses.Place
 import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.ui.base.BaseFragment
-import com.example.myapplication.ui.place.PlaceActivity
 
 
 class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding, PlaceRepository>() {
@@ -26,7 +22,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding, Plac
     private lateinit var mContext: Context
 
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var adapter: RecyclerAdapter
+    private lateinit var adapter: SearchRecyclerAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,7 +38,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding, Plac
                     for (element in it.value) {
                         placesList.add(element)
                     }
-                    adapter = RecyclerAdapter(placesList)
+                    adapter = SearchRecyclerAdapter(placesList)
                     binding.listview.adapter = adapter
 
                     binding.simpleSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -72,6 +68,6 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding, Plac
             container: ViewGroup?
     ) = FragmentSearchBinding.inflate(inflater, container, false)
 
-    override fun getFragmentRepository() = PlaceRepository(remoteDataSource.buildApi(PlaceApi::class.java))
+    override fun getFragmentRepository() = PlaceRepository(remoteDataSource.buildApi(PlaceApi::class.java), userPreferences)
 
 }

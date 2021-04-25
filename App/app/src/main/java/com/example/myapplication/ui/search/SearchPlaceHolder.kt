@@ -7,9 +7,9 @@ import com.example.myapplication.Global
 import com.example.myapplication.R
 import com.example.myapplication.data.responses.Place
 import com.example.myapplication.ui.place.PlaceActivity
-import kotlinx.android.synthetic.main.listview_item.view.*
+import kotlinx.android.synthetic.main.searchlist_item.view.*
 
-class PlaceHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
+class SearchPlaceHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
     private var view: View = v
     private var place: Place? = null
 

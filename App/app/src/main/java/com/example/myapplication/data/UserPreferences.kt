@@ -23,9 +23,26 @@ class UserPreferences(
             preferences[KEY_AUTH]
         }
 
+    val userLat: Flow<String?>
+        get() = dataStore.data.map { preferences ->
+            preferences[KEY_USER_LAT]
+        }
+
+    val userLong: Flow<String?>
+        get() = dataStore.data.map { preferences ->
+            preferences[KEY_USER_LONG]
+        }
+
     suspend fun saveAuthToken(authToken: String) {
         dataStore.edit { preferences ->
             preferences[KEY_AUTH] = authToken
+        }
+    }
+
+    suspend fun saveUserLocation(lat: String, long: String) {
+        dataStore.edit { preferences ->
+            preferences[KEY_USER_LAT] = lat
+            preferences[KEY_USER_LONG] = long
         }
     }
 
@@ -37,5 +54,7 @@ class UserPreferences(
 
     companion object {
         private val KEY_AUTH = preferencesKey<String>("key_auth")
+        private val KEY_USER_LAT = preferencesKey<String>("key_user_lat")
+        private val KEY_USER_LONG = preferencesKey<String>("key_user_long")
     }
 }

@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
+import kotlinx.coroutines.runBlocking
 
 
 class MapFragment : BaseFragment<MapViewModel, FragmentMapBinding, PlaceRepository>(), OnMapReadyCallback {
@@ -195,6 +196,7 @@ class MapFragment : BaseFragment<MapViewModel, FragmentMapBinding, PlaceReposito
                             // Set the map's camera position to the current location of the device.
                             lastKnownLocation = task.result
                             if (lastKnownLocation != null) {
+                                runBlocking { viewModel.saveUserLocation(lastKnownLocation!!) }
                                 googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     LatLng(lastKnownLocation!!.latitude,
                                         lastKnownLocation!!.longitude), DEFAULT_ZOOM.toFloat()))
@@ -221,7 +223,7 @@ class MapFragment : BaseFragment<MapViewModel, FragmentMapBinding, PlaceReposito
             container: ViewGroup?
     ): FragmentMapBinding = FragmentMapBinding.inflate(inflater, container, false)
 
-    override fun getFragmentRepository() = PlaceRepository(remoteDataSource.buildApi(PlaceApi::class.java))
+    override fun getFragmentRepository() = PlaceRepository(remoteDataSource.buildApi(PlaceApi::class.java), userPreferences)
 
     companion object{
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1

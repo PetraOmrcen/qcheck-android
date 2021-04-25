@@ -2,6 +2,7 @@ package com.example.myapplication.ui.place
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.example.myapplication.data.network.PlaceApi
@@ -15,8 +16,8 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
 
     private lateinit var place : Place
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val placeId = (activity as PlaceActivity).placeId
 
@@ -59,5 +60,5 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
     ) = FragmentPlaceBinding.inflate(inflater, container, false)
 
     override fun getFragmentRepository()=
-            PlaceRepository(remoteDataSource.buildApi(PlaceApi::class.java))
+            PlaceRepository(remoteDataSource.buildApi(PlaceApi::class.java), userPreferences)
 }

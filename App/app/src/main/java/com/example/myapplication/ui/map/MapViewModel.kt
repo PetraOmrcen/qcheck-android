@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.map
 
+import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -20,5 +21,9 @@ class MapViewModel(
     fun getPlaces() = viewModelScope.launch {
         _places.value = Resource.Loading
         _places.value = repository.getPlaces()
+    }
+
+    suspend fun saveUserLocation(location: Location) {
+        repository.saveUserLocation(location)
     }
 }

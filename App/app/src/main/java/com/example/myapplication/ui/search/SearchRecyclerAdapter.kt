@@ -9,17 +9,17 @@ import com.example.myapplication.data.responses.Place
 import com.example.myapplication.ui.inflate
 import kotlin.collections.ArrayList
 
-class RecyclerAdapter(private val places: ArrayList<Place>): RecyclerView.Adapter<PlaceHolder>(), Filterable {
+class SearchRecyclerAdapter(private val places: ArrayList<Place>): RecyclerView.Adapter<SearchPlaceHolder>(), Filterable {
 
     var placesList = ArrayList<Place>(places)
     var placesListFilter = ArrayList<Place>(places)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceHolder {
-        val inflatedView = parent.inflate(R.layout.listview_item, false)
-        return PlaceHolder(inflatedView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchPlaceHolder {
+        val inflatedView = parent.inflate(R.layout.searchlist_item, false)
+        return SearchPlaceHolder(inflatedView)
     }
 
-    override fun onBindViewHolder(holder: PlaceHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchPlaceHolder, position: Int) {
         val itemPlace = placesList[position]
         holder.bindPlace(itemPlace)
     }
