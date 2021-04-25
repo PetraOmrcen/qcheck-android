@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.Global
 import com.example.myapplication.R
 import com.example.myapplication.data.network.PlaceApi
@@ -21,38 +22,37 @@ import com.example.myapplication.ui.place.PlaceActivity
 
 class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding, PlaceRepository>() {
 
-    private lateinit var adapter: ListViewAdapter
-    private var arraylist = ArrayList<Place>()
+    private var placesList = ArrayList<Place>()
     private lateinit var mContext: Context
+
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var adapter: RecyclerAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getPlaces()
         mContext = this.requireContext()
 
-        binding.listview.setOnItemClickListener { parent, view, position, id ->
-            Global.fragmentStack.add(R.id.navigation_search)
-            val intent = Intent(mContext, PlaceActivity::class.java)
-            intent.putExtra("PlaceId", adapter.getItemId(position))
-            startActivity(intent)
-        }
+        linearLayoutManager = LinearLayoutManager(mContext)
+        binding.listview.layoutManager = linearLayoutManager
 
         viewModel.places.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     for (element in it.value) {
-                        arraylist.add(element)
+                        placesList.add(element)
                     }
-                    adapter = ListViewAdapter(mContext, arraylist)
+                    adapter = RecyclerAdapter(placesList)
                     binding.listview.adapter = adapter
+
                     binding.simpleSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                         override fun onQueryTextChange(newText: String): Boolean {
-                            adapter.filter(newText)
+                            adapter.filter.filter(newText)
                             return false
                         }
 
                         override fun onQueryTextSubmit(query: String): Boolean {
-                            adapter.filter(query)
+                            adapter.filter.filter(query)
                             return false
                         }
                     })

@@ -5,7 +5,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.core.graphics.toColor
 import androidx.fragment.app.Fragment
 import com.auth0.android.jwt.JWT
@@ -58,6 +61,10 @@ fun View.snackbar(message: String, action: (() -> Unit)? = null) {
         }
     }
     snackbar.show()
+}
+
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
+    return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }
 
 fun Fragment.handleApiError(
