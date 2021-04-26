@@ -23,8 +23,6 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
 
         viewModel.getPlace(placeId)
 
-
-
         viewModel.place.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {

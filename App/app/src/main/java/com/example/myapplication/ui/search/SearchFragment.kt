@@ -36,6 +36,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding, Plac
             when (it) {
                 is Resource.Success -> {
                     for (element in it.value) {
+                        element.distanceFromUser = viewModel.getDistance(element)
                         placesList.add(element)
                     }
                     adapter = SearchRecyclerAdapter(placesList)

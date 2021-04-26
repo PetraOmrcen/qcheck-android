@@ -11,5 +11,6 @@ data class Place(
         val maxOccupancy: Int,
         val ownerId: Int,
         val placeName: String,
-        val postalCode: String
+        val postalCode: String,
+        var distanceFromUser: Float?
 )
