@@ -8,12 +8,15 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.data.network.PlaceApi
 import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.repository.PlaceRepository
 import com.example.myapplication.data.responses.Place
 import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.ui.base.BaseFragment
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 
 class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding, PlaceRepository>() {
@@ -24,6 +27,8 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding, Plac
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: SearchRecyclerAdapter
 
+    private lateinit var  userLoc: String
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getPlaces()
@@ -32,11 +37,17 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding, Plac
         linearLayoutManager = LinearLayoutManager(mContext)
         binding.listview.layoutManager = linearLayoutManager
 
+        userPreferences = UserPreferences(requireContext())
+
+        userLoc = runBlocking { userPreferences.userLong.first().toString()}
+
         viewModel.places.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     for (element in it.value) {
-                        element.distanceFromUser = viewModel.getDistance(element)
+                        if(userLoc != "null") {
+                            element.distanceFromUser = viewModel.getDistance(element)
+                        }
                         placesList.add(element)
                     }
                     adapter = SearchRecyclerAdapter(placesList)

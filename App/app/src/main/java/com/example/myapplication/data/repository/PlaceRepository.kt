@@ -27,8 +27,12 @@ class PlaceRepository (private val api: PlaceApi, private val preferences: UserP
 
     suspend fun getUserLocation(): Location{
         var user = Location("")
-        user.latitude = runBlocking { preferences.userLat.first() }.toString().toDouble()
-        user.longitude = runBlocking { preferences.userLong.first() }.toString().toDouble()
+        var lat = runBlocking { preferences.userLat.first() }.toString()
+        var long = runBlocking { preferences.userLong.first() }.toString()
+        if(lat != "null" && long != "null") {
+            user.latitude = lat.toDouble()
+            user.longitude = long.toDouble()
+        }
 
         return user
     }

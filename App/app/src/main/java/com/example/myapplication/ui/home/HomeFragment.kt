@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.data.network.PlaceApi
 import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.repository.PlaceRepository
@@ -30,6 +31,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding, PlaceRepos
     private lateinit var linearLayoutManagerFavorites: LinearLayoutManager
     private lateinit var adapterFavorites: HomeRecyclerAdapter
 
+    private lateinit var  userLoc: String
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -44,18 +47,26 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding, PlaceRepos
         linearLayoutManagerFavorites.orientation = LinearLayoutManager.HORIZONTAL
         binding.favoritesList.layoutManager = linearLayoutManagerFavorites
 
+        userPreferences = UserPreferences(requireContext())
+
+        userLoc = runBlocking { userPreferences.userLong.first().toString()}
+
         viewModel.places.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     for (element in it.value) {
-                        element.distanceFromUser = viewModel.getDistance(element)
+                        if(userLoc != "null") {
+                            element.distanceFromUser = viewModel.getDistance(element)
+                        }
                         placesList.add(element)
                     }
 
-                    placesList.sortWith(Comparator { place1, place2 ->
-                        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-                        if (place1.distanceFromUser!! < place2.distanceFromUser!!) -1 else if (place1.distanceFromUser!! > place2.distanceFromUser!!) 1 else 0
-                    })
+                    if(userLoc != "null") {
+                        placesList.sortWith(Comparator { place1, place2 ->
+                            // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+                            if (place1.distanceFromUser!! < place2.distanceFromUser!!) -1 else if (place1.distanceFromUser!! > place2.distanceFromUser!!) 1 else 0
+                        })
+                    }
 
                     adapterDistance = HomeRecyclerAdapter(placesList)
                     binding.distanceList.adapter = adapterDistance

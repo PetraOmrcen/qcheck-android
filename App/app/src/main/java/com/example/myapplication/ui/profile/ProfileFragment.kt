@@ -70,8 +70,6 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, U
         binding.logoutText.setOnClickListener {
             logout()
         }
-
-
     }
 
     override fun getViewModel() = ProfileViewModel::class.java

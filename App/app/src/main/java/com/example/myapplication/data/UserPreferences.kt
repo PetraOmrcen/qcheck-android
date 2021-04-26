@@ -43,6 +43,7 @@ class UserPreferences(
         dataStore.edit { preferences ->
             preferences[KEY_USER_LAT] = lat
             preferences[KEY_USER_LONG] = long
+            preferences[KEY_USER_LOC] = "1"
         }
     }
 
@@ -54,6 +55,7 @@ class UserPreferences(
 
     companion object {
         private val KEY_AUTH = preferencesKey<String>("key_auth")
+        private val KEY_USER_LOC = preferencesKey<String>("key_user_loc")
         private val KEY_USER_LAT = preferencesKey<String>("key_user_lat")
         private val KEY_USER_LONG = preferencesKey<String>("key_user_long")
     }
