@@ -27,7 +27,7 @@ class SearchPlaceHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListe
         view.title.text = place.placeName + ": " + place.currentOccupancy + " / " + place.maxOccupancy
         view.capacityProgressBar.progress = ((place.currentOccupancy.toFloat() / place.maxOccupancy.toFloat()) * 100).toInt()
         if(place.distanceFromUser == null) view.searchdistance.visible(false)
-        else view.searchdistance.text = "Distance: " + (place.distanceFromUser?.roundToInt() ?: context.getString(R.string.nanString))
+        else view.searchdistance.text = "Distance: " + (place.distanceFromUser?.roundToInt() ?: view.context.getString(R.string.nanString))
     }
 
     override fun onClick(v: View) {
