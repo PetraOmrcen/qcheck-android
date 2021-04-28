@@ -119,12 +119,12 @@ class MapFragment : BaseFragment<MapViewModel, FragmentMapBinding, PlaceReposito
             Global.fragmentStack.add(R.id.navigation_map)
             val intent = Intent(context, PlaceActivity::class.java)
             val place = arraylist[markers.indexOf(it)]
-            intent.putExtra("PlaceId", place.id)
+            intent.putExtra(getString(R.string.placeId), place.id)
             startActivity(intent)
         }
     }
 
-    private fun getLocationPermission() {
+    public fun getLocationPermission() {
         /*
          * Request location permission, so that we can get the location of the
          * device. The result of the permission request is handled by a callback,

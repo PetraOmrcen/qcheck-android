@@ -27,14 +27,14 @@ class SearchPlaceHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListe
         view.title.text = place.placeName + ": " + place.currentOccupancy + " / " + place.maxOccupancy
         view.capacityProgressBar.progress = ((place.currentOccupancy.toFloat() / place.maxOccupancy.toFloat()) * 100).toInt()
         if(place.distanceFromUser == null) view.searchdistance.visible(false)
-        else view.searchdistance.text = "Distance: " + (place.distanceFromUser?.roundToInt() ?: "Nan")
+        else view.searchdistance.text = "Distance: " + (place.distanceFromUser?.roundToInt() ?: context.getString(R.string.nanString))
     }
 
     override fun onClick(v: View) {
         val context = itemView.context
         Global.fragmentStack.add(R.id.navigation_search)
         val intent = Intent(context, PlaceActivity::class.java)
-        place?.let { intent.putExtra("PlaceId", it.id) }
+        place?.let { intent.putExtra(view.context.getString(R.string.placeId), it.id) }
         context.startActivity(intent)
     }
 }

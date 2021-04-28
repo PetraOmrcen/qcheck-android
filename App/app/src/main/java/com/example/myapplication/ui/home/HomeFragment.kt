@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.R
 import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.data.network.PlaceApi
 import com.example.myapplication.data.network.Resource
@@ -16,6 +17,7 @@ import com.example.myapplication.data.repository.PlaceRepository
 import com.example.myapplication.data.responses.Place
 import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.ui.base.BaseFragment
+import com.example.myapplication.ui.map.MapFragment
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
@@ -55,13 +57,13 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding, PlaceRepos
             when (it) {
                 is Resource.Success -> {
                     for (element in it.value) {
-                        if(userLoc != "null") {
+                        if(userLoc != getString(R.string.NULL_STRING)) {
                             element.distanceFromUser = viewModel.getDistance(element)
                         }
                         placesList.add(element)
                     }
 
-                    if(userLoc != "null") {
+                    if(userLoc != getString(R.string.NULL_STRING)) {
                         placesList.sortWith(Comparator { place1, place2 ->
                             // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
                             if (place1.distanceFromUser!! < place2.distanceFromUser!!) -1 else if (place1.distanceFromUser!! > place2.distanceFromUser!!) 1 else 0

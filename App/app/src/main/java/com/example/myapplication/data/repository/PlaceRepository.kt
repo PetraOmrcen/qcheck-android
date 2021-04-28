@@ -29,7 +29,7 @@ class PlaceRepository (private val api: PlaceApi, private val preferences: UserP
         var user = Location("")
         var lat = runBlocking { preferences.userLat.first() }.toString()
         var long = runBlocking { preferences.userLong.first() }.toString()
-        if(lat != "null" && long != "null") {
+        if(lat != NULL_STRING && long != NULL_STRING) {
             user.latitude = lat.toDouble()
             user.longitude = long.toDouble()
         }

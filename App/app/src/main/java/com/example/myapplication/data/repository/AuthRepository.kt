@@ -23,7 +23,7 @@ class AuthRepository(
             firstName: String,
             lastName: String
     ) = safeApiCall {
-        val user = RegisterRequest(email, firstName, lastName, password, "null", 0, "null")
+        val user = RegisterRequest(email, firstName, lastName, password, NULL_STRING, 0, NULL_STRING)
         api.register(user)
     }
 

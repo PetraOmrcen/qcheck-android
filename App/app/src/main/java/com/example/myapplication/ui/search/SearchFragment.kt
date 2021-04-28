@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.R
 import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.data.network.PlaceApi
 import com.example.myapplication.data.network.Resource
@@ -45,7 +46,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding, Plac
             when (it) {
                 is Resource.Success -> {
                     for (element in it.value) {
-                        if(userLoc != "null") {
+                        if(userLoc != getString(R.string.NULL_STRING)) {
                             element.distanceFromUser = viewModel.getDistance(element)
                         }
                         placesList.add(element)

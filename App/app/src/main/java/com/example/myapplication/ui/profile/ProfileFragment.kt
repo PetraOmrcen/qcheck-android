@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.auth0.android.jwt.JWT
 import com.example.myapplication.MainActivity
+import com.example.myapplication.R
 import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.data.network.UserApi
 import com.example.myapplication.data.repository.UserRepository
@@ -42,7 +43,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, U
             googleAcc = true
         }
 
-        if(authToken == "null" && !googleAcc) {
+        if(authToken == getString(R.string.NULL_STRING) && !googleAcc) {
             startActivity(Intent(context, AuthActivity::class.java))
         }
 
@@ -56,7 +57,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, U
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        if(authToken != "null") {
+        if(authToken != getString(R.string.NULL_STRING)) {
             val token = authToken
             val jwt = JWT(token)
             var user = makeUserFromJWT(jwt)

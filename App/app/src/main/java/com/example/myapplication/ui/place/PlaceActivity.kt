@@ -11,7 +11,7 @@ class PlaceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place)
-        placeId = this.intent.getLongExtra("PlaceId", 0)
+        placeId = this.intent.getLongExtra(getString(R.string.placeId), 0)
         title = ""
     }
 }

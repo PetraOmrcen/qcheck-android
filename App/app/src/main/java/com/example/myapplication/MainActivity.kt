@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         navView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_profile -> {
-                    if (authToken == "null" && !googleAcc) {
+                    if (authToken == getString(R.string.NULL_STRING) && !googleAcc) {
                         startActivity(Intent(this, AuthActivity::class.java))
                     } else {
                         navController.navigate(R.id.navigation_profile)
