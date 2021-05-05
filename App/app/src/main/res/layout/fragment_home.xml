@@ -9,11 +9,14 @@
     <TextView
         android:id="@+id/textViewMyClosest"
         style="@style/TextLabelDefault"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="Closest places"
+        android:textAlignment="center"
+        android:textColor="#027892"
         android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,11 +32,14 @@
     <TextView
         android:id="@+id/textViewFavorites"
         style="@style/TextLabelDefault"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="80dp"
         android:text="My Favorites"
+        android:textAlignment="center"
+        android:textColor="#027892"
         android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/distanceList" />
 

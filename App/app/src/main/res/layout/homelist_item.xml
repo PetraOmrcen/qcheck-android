@@ -27,11 +27,12 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="title"
-                android:textStyle="bold"
-                android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+                android:layout_marginLeft="15dp"
+                android:text="title"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="#000000"
+                android:textStyle="bold" />
 
             <ProgressBar
                 android:id="@+id/capacityProgressBar"
@@ -46,22 +47,23 @@
                 android:minHeight="30dp"
                 android:progress="50"
                 android:progressBackgroundTint="@android:color/darker_gray"
-                android:progressTint="#4CAF50"
+                android:progressTint="#016B85"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/snippet"
                 android:scaleY="3"/>
+
             <TextView
                 android:id="@+id/homedistance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="distance"
-                android:textStyle="normal"
-                android:textColor="@color/quantum_grey"
-                android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+                android:layout_marginLeft="15dp"
+                android:text="distance"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="#016B85"
+                android:textStyle="normal" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
