@@ -226,7 +226,7 @@ class MapFragment : BaseFragment<MapViewModel, FragmentMapBinding, PlaceReposito
     override fun getFragmentRepository() = PlaceRepository(remoteDataSource.buildApi(PlaceApi::class.java), userPreferences)
 
     companion object{
-        private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+        const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
         private const val DEFAULT_ZOOM = 15
     }
 

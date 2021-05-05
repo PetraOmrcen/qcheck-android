@@ -9,7 +9,6 @@ import com.example.myapplication.data.responses.Place
 import com.example.myapplication.ui.place.PlaceActivity
 import com.example.myapplication.ui.visible
 import kotlinx.android.synthetic.main.homelist_item.view.*
-import kotlinx.android.synthetic.main.searchlist_item.view.*
 import kotlinx.android.synthetic.main.searchlist_item.view.capacityProgressBar
 import kotlinx.android.synthetic.main.searchlist_item.view.title
 import kotlin.math.roundToInt

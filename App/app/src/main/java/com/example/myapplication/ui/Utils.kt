@@ -2,21 +2,16 @@ package com.example.myapplication.ui
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
-import androidx.core.graphics.toColor
 import androidx.fragment.app.Fragment
 import com.auth0.android.jwt.JWT
 import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.responses.User
 import com.example.myapplication.ui.auth.LoginFragment
 import com.example.myapplication.ui.base.BaseFragment
-import com.example.myapplication.ui.profile.ProfileViewModel
 import com.google.android.material.snackbar.Snackbar
 
 fun <A : Activity> Activity.startNewActivity(activity: Class<A>) {
@@ -35,9 +30,19 @@ fun makeUserFromJWT(jwt: JWT): User {
     val firstName = jwt.getClaim("firstName").asString()
     val lastName = jwt.getClaim("lastName").asString()
     val id = jwt.getClaim("id").asString()
-    val roleId = jwt.getClaim("authorities").asArray(String::class.java)[0]
-    val user = User(null, null, email.toString(), id.toString().toInt(), firstName.toString(), lastName.toString(), roleId.toString() )
+    val roleId = jwt.getClaim("authorities").asArray(String::class.java).first()
+    val user = User(null, null, email.toString(), id.toString().toInt(), firstName.toString(), lastName.toString(), roleId.toString())
     return user
+}
+
+fun disableEnableControls(enable: Boolean, vg: ViewGroup) {
+    for (i in 0 until vg.childCount) {
+        val child = vg.getChildAt(i)
+        child.enable(enable)
+        if (child is ViewGroup) {
+            disableEnableControls(enable, child)
+        }
+    }
 }
 
 fun translateValueToColor(value: Int): Int {
@@ -68,13 +73,13 @@ fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false):
 }
 
 fun Fragment.handleApiError(
-    failure: Resource.Failure,
-    retry: (() -> Unit)? = null
+        failure: Resource.Failure,
+        retry: (() -> Unit)? = null
 ) {
     when {
         failure.isNetworkError -> requireView().snackbar(
-            "Please check your internet connection",
-            retry
+                "Please check your internet connection",
+                retry
         )
         failure.errorCode == 401 -> {
             if (this is LoginFragment) {

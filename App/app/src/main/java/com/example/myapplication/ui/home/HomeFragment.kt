@@ -7,8 +7,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.auth0.android.jwt.JWT
 import com.example.myapplication.R
 import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.data.network.PlaceApi
@@ -17,7 +19,9 @@ import com.example.myapplication.data.repository.PlaceRepository
 import com.example.myapplication.data.responses.Place
 import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.ui.base.BaseFragment
+import com.example.myapplication.ui.makeUserFromJWT
 import com.example.myapplication.ui.map.MapFragment
+import com.example.myapplication.ui.visible
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
@@ -25,7 +29,9 @@ import kotlinx.coroutines.runBlocking
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding, PlaceRepository>() {
 
     private var placesList = ArrayList<Place>()
+    private var favplacesList = ArrayList<Place>()
     private lateinit var mContext: Context
+    private lateinit var  authToken: String
 
     private lateinit var linearLayoutManagerDistance: LinearLayoutManager
     private lateinit var adapterDistance: HomeRecyclerAdapter
@@ -50,12 +56,24 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding, PlaceRepos
         binding.favoritesList.layoutManager = linearLayoutManagerFavorites
 
         userPreferences = UserPreferences(requireContext())
+        authToken = runBlocking { userPreferences.authToken.first() }.toString()
 
         userLoc = runBlocking { userPreferences.userLong.first().toString()}
+
+        if(authToken != getString(R.string.NULL_STRING)) {
+            val token = authToken
+            val jwt = JWT(token)
+            var user = makeUserFromJWT(jwt)
+            viewModel.getFavoritePlaces(user.id)
+        }else {
+            binding.textViewFavorites.isInvisible = true
+            binding.progressbarhomefavorites.isInvisible = true
+        }
 
         viewModel.places.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
+                    binding.progressbarhomeclosest.visible(false)
                     for (element in it.value) {
                         if(userLoc != getString(R.string.NULL_STRING)) {
                             element.distanceFromUser = viewModel.getDistance(element)
@@ -72,16 +90,39 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding, PlaceRepos
 
                     adapterDistance = HomeRecyclerAdapter(placesList)
                     binding.distanceList.adapter = adapterDistance
-
-                    adapterFavorites = HomeRecyclerAdapter(placesList)
-                    binding.favoritesList.adapter = adapterFavorites
                 }
                 is Resource.Loading -> {
-                    //binding.progressbar.visible(true)
+                    binding.progressbarhomeclosest.visible(true)
                 }
             }
         })
 
+
+        viewModel.favplaces.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Resource.Success -> {
+                    binding.progressbarhomefavorites.visible(false)
+                    for (element in it.value) {
+                        if(userLoc != getString(R.string.NULL_STRING)) {
+                            element.distanceFromUser = viewModel.getDistance(element)
+                        }
+                        favplacesList.add(element)
+                    }
+
+                    binding.textViewFavorites.isInvisible = false
+
+                    adapterFavorites = HomeRecyclerAdapter(favplacesList)
+                    binding.favoritesList.adapter = adapterFavorites
+                }
+                is Resource.Loading -> {
+                    if(authToken == getString(R.string.NULL_STRING)) {
+                        binding.progressbarhomefavorites.visible(false)
+                    }else{
+                        binding.progressbarhomefavorites.visible(true)
+                    }
+                }
+            }
+        })
     }
 
     override fun getViewModel() = HomeViewModel::class.java

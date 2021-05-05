@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.auth0.android.jwt.JWT
-import com.example.myapplication.MainActivity
+import com.example.myapplication.Global
 import com.example.myapplication.R
 import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.data.network.UserApi
@@ -16,7 +16,10 @@ import com.example.myapplication.databinding.FragmentProfileBinding
 import com.example.myapplication.ui.auth.AuthActivity
 import com.example.myapplication.ui.base.BaseFragment
 import com.example.myapplication.ui.base.ViewModelFactory
+import com.example.myapplication.ui.disableEnableControls
+import com.example.myapplication.ui.favourites.FavouritesActivity
 import com.example.myapplication.ui.makeUserFromJWT
+import com.example.myapplication.ui.myPlaces.MyPlacesActivity
 import com.example.myapplication.ui.place.PlaceActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -35,6 +38,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, U
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         userPreferences = UserPreferences(requireContext())
         authToken = runBlocking { userPreferences.authToken.first() }.toString()
 
@@ -54,14 +58,33 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, U
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         if(authToken != getString(R.string.NULL_STRING)) {
             val token = authToken
             val jwt = JWT(token)
             var user = makeUserFromJWT(jwt)
             binding.textViewProfile.text =  user.firstName + " " + user.lastName
+            if(user.roleId == getString(R.string.ROLE_USER)){
+                disableEnableControls(false, binding.linearlayout2)
+                binding.linearlayout3.setOnClickListener{
+                    Global.fragmentStack.add(R.id.navigation_profile)
+                    val intent = Intent(context, FavouritesActivity::class.java)
+                    startActivity(intent)
+                }
+            }else if(user.roleId == getString(R.string.ROLE_OWNER)){
+                binding.linearlayout2.setOnClickListener{
+                    Global.fragmentStack.add(R.id.navigation_profile)
+                    val intent = Intent(context, MyPlacesActivity::class.java)
+                    startActivity(intent)
+                }
+                binding.linearlayout3.setOnClickListener{
+                    Global.fragmentStack.add(R.id.navigation_profile)
+                    val intent = Intent(context, FavouritesActivity::class.java)
+                    startActivity(intent)
+                }
+            }
         }
 
         if(googleAcc) {

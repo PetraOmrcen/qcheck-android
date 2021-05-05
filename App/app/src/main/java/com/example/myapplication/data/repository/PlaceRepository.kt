@@ -13,12 +13,32 @@ class PlaceRepository (private val api: PlaceApi, private val preferences: UserP
         api.getPlaces()
     }
 
+    suspend fun getFavoritePlaces(id: Int) = safeApiCall {
+        api.getFavoritePlaces(id.toLong())
+    }
+
+    suspend fun getMyPlaces(id: Int) = safeApiCall {
+        api.getMyPlaces(id.toLong())
+    }
+
     suspend fun getPlace(PlaceId : Long) = safeApiCall {
         api.getPlace(PlaceId)
     }
 
     suspend fun changeOccupancy(placeId : Long, place: Place) = safeApiCall {
         api.changeOccupancy(placeId, place)
+    }
+
+    suspend fun setFavorite(placeId : Long, userId: Long) = safeApiCall {
+        api.setFavorite(placeId, userId)
+    }
+
+    suspend fun removeFavorite(placeId : Long, userId: Long) = safeApiCall {
+        api.removeFavorite(placeId, userId)
+    }
+
+    suspend fun isFavorite(placeId : Long, userId: Long) = safeApiCall {
+        api.isFavorite(placeId, userId)
     }
 
     suspend fun saveUserLocation(location: Location){

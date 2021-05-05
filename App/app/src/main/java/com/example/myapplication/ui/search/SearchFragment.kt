@@ -16,6 +16,7 @@ import com.example.myapplication.data.repository.PlaceRepository
 import com.example.myapplication.data.responses.Place
 import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.ui.base.BaseFragment
+import com.example.myapplication.ui.visible
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
@@ -45,6 +46,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding, Plac
         viewModel.places.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
+                    binding.progressbarsearch.visible(false)
                     for (element in it.value) {
                         if(userLoc != getString(R.string.NULL_STRING)) {
                             element.distanceFromUser = viewModel.getDistance(element)
@@ -67,7 +69,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding, Plac
                     })
                 }
                 is Resource.Loading -> {
-                    //binding.progressbar.visible(true)
+                    binding.progressbarsearch.visible(true)
                 }
             }
         })

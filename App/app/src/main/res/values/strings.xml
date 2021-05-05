@@ -25,4 +25,7 @@
     <string name="placeId">PlaceId</string>
     <string name="NULL_STRING">null</string>
     <string name="nanString">Nan</string>
+    <string name="ROLE_USER">ROLE_USER</string>
+    <string name="ROLE_OWNER">ROLE_OWNER</string>
+    <string name="ROLE_EMPLOYEE">ROLE_USER</string>
 </resources>

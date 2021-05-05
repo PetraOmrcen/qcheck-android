@@ -4,17 +4,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import com.auth0.android.jwt.JWT
+import com.example.myapplication.R
 import com.example.myapplication.data.network.PlaceApi
 import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.repository.PlaceRepository
 import com.example.myapplication.data.responses.Place
 import com.example.myapplication.databinding.FragmentPlaceBinding
 import com.example.myapplication.ui.base.BaseFragment
+import com.example.myapplication.ui.makeUserFromJWT
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import kotlin.properties.Delegates
 
 class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRepository>() {
 
     private lateinit var place : Place
+    private lateinit var  authToken: String
+    private var userId by Delegates.notNull<Long>()
+    private var isFavorite by Delegates.notNull<Boolean>()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -22,6 +33,21 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
         val placeId = (activity as PlaceActivity).placeId
 
         viewModel.getPlace(placeId)
+
+        authToken = runBlocking { userPreferences.authToken.first() }.toString()
+
+        if(authToken != getString(R.string.NULL_STRING)) {
+            val token = authToken
+            val jwt = JWT(token)
+            var user = makeUserFromJWT(jwt)
+            userId = user.id.toLong()
+            viewModel.isFavorite(placeId, userId)
+            binding.favoriteButton.isEnabled = true
+            binding.favoriteButton.isVisible = true
+        }else {
+            binding.favoriteButton.isEnabled = false
+            binding.favoriteButton.isVisible = false
+        }
 
         viewModel.place.observe(viewLifecycleOwner, Observer {
             when (it) {
@@ -39,6 +65,21 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
             }
         })
 
+        viewModel.isFavorite.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Resource.Success -> {
+                    this.isFavorite = it.value
+                    if(isFavorite)
+                        binding.favoriteButton.setBackgroundResource(R.drawable.favorites_red)
+                    else
+                        binding.favoriteButton.setBackgroundResource(R.drawable.favourites_darkblue)
+                }
+                is Resource.Loading -> {
+                    //binding.progressbar.visible(true)
+                }
+            }
+        })
+
         binding.buttonDecr.setOnClickListener{
             place.currentOccupancy -= 1
             viewModel.changeOccupancy(place.id, place)
@@ -47,6 +88,15 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
         binding.buttonIncr.setOnClickListener{
             place.currentOccupancy += 1
             viewModel.changeOccupancy(place.id, place)
+        }
+
+        binding.favoriteButton.setOnClickListener{
+            if(isFavorite) {
+                viewModel.removeFavorite(placeId, userId)
+            }
+            else{
+                viewModel.setFavorite(placeId, userId)
+            }
         }
     }
 
