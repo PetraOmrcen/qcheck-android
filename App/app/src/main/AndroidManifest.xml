@@ -25,10 +25,12 @@
 
         <activity
             android:name=".ui.favourites.FavouritesActivity"
+            android:label=""
             android:parentActivityName=".MainActivity" />
 
         <activity
             android:name=".ui.myPlaces.MyPlacesActivity"
+            android:label=""
             android:parentActivityName=".MainActivity" />
 
         <meta-data
