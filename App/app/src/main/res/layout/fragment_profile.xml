@@ -6,45 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.ProfileFragment">
 
+
+    <!--    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"-->
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageview_profile"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:src="@drawable/profile_picture"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        />
-
-
-    <ImageView
-        android:id="@+id/profile_design"
-        android:layout_width="match_parent"
-        android:layout_height="87dp"
-        android:layout_marginTop="210dp"
-        android:rotation="180"
-        android:src="@drawable/wave_blue2" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="131dp"
+        android:layout_marginEnd="133dp"
+        android:src="@drawable/profile_picture" />
 
     <TextView
         android:id="@+id/textViewProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageview_profile"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="113dp"
         android:text="Welcome user"
         android:textAlignment="center"
         android:textColor="@color/green_blue"
         android:textSize="25dp"
         android:textStyle="bold" />
 
-    <!--    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"-->
-
     <TextView
         android:id="@+id/textViewToken"
         android:layout_width="146dp"
         android:layout_height="146dp"
-        android:layout_below="@+id/profile_design"
         app:layout_constraintStart_toStartOf="parent" />
 
 
@@ -52,26 +47,26 @@
         android:id="@+id/linearlayout_1"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:layout_below="@+id/profile_design"
-        android:layout_marginTop="0dp"
-        >
+        android:layout_below="@+id/textViewProfile"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="0dp"
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:src="@drawable/person_darkblue"
             android:layout_marginLeft="70dp"
-            />
+            android:src="@drawable/person_darkblue" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My Profile"
-            android:textSize="18dp"
-            android:textColor="#000"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
-            />
+            android:text="My Profile"
+            android:textColor="#000"
+            android:textSize="18dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -127,37 +122,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearlayout_4"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:layout_below="@+id/linearlayout_3"
-        android:layout_marginTop="20dp"
-        >
-
-        <ImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:src="@drawable/settings_darkblue"
-            android:layout_marginLeft="70dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Settings"
-            android:textSize="18dp"
-            android:textColor="#000"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/linearlayout_5"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
-        android:layout_below="@+id/linearlayout_4"
+        android:layout_below="@+id/linearlayout_3"
         android:layout_marginTop="20dp"
         >
 
@@ -179,7 +148,22 @@
             />
     </LinearLayout>
 
-
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="290dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="-31dp"
+        android:src="@drawable/rectangle1" />
+<!--
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="match_parent"
+        android:layout_height="404dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-35dp"
+        android:rotation="180"
+        android:src="@drawable/rectangle3" />-->
 
 
 </RelativeLayout>

@@ -9,11 +9,15 @@
     <TextView
         android:id="@+id/textViewMyClosest"
         style="@style/TextLabelDefault"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:text="Closest places"
+        android:textAlignment="textStart"
+        android:textColor="#027892"
         android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,11 +33,15 @@
     <TextView
         android:id="@+id/textViewFavorites"
         style="@style/TextLabelDefault"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:text="My Favorites"
+        android:textAlignment="textStart"
+        android:textColor="#027892"
         android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/distanceList" />
 

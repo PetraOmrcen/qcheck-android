@@ -21,6 +21,7 @@ import com.example.myapplication.ui.base.BaseFragment
 import com.example.myapplication.ui.home.HomeRecyclerAdapter
 import com.example.myapplication.ui.home.HomeViewModel
 import com.example.myapplication.ui.makeUserFromJWT
+import com.example.myapplication.ui.search.SearchRecyclerAdapter
 import com.example.myapplication.ui.visible
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -33,7 +34,7 @@ class FavouritesFragment : BaseFragment<HomeViewModel, FragmentFavouritesBinding
     private lateinit var  authToken: String
 
     private lateinit var linearLayoutManagerFavorites: LinearLayoutManager
-    private lateinit var adapterFavorites: HomeRecyclerAdapter
+    private lateinit var adapterFavorites: SearchRecyclerAdapter
 
     private lateinit var  userLoc: String
 
@@ -70,7 +71,7 @@ class FavouritesFragment : BaseFragment<HomeViewModel, FragmentFavouritesBinding
                     }
 
 
-                    adapterFavorites = HomeRecyclerAdapter(favplacesList)
+                    adapterFavorites = SearchRecyclerAdapter(favplacesList)
                     binding.favouritesRecyclerView.adapter = adapterFavorites
                 }
                 is Resource.Loading -> {
