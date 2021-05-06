@@ -2,7 +2,6 @@ package com.example.myapplication
 
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -17,12 +16,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.databinding.ActivityMainBinding
-import com.example.myapplication.databinding.FragmentPlaceBinding
 import com.example.myapplication.ui.auth.AuthActivity
 import com.example.myapplication.ui.map.MapFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -32,8 +29,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var userPreferences: UserPreferences
     private lateinit var  authToken: String
-    var googleAcc: Boolean = false
-    lateinit var  account: GoogleSignInAccount
+    private var googleAcc: Boolean = false
+    private lateinit var  account: GoogleSignInAccount
     private lateinit var binding: ActivityMainBinding
 
     private var locationManager : LocationManager? = null

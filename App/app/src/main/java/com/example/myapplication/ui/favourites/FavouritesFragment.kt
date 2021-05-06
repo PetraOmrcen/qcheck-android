@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isInvisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.auth0.android.jwt.JWT
@@ -16,9 +15,7 @@ import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.repository.PlaceRepository
 import com.example.myapplication.data.responses.Place
 import com.example.myapplication.databinding.FragmentFavouritesBinding
-import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.ui.base.BaseFragment
-import com.example.myapplication.ui.home.HomeRecyclerAdapter
 import com.example.myapplication.ui.home.HomeViewModel
 import com.example.myapplication.ui.makeUserFromJWT
 import com.example.myapplication.ui.search.SearchRecyclerAdapter
@@ -55,7 +52,7 @@ class FavouritesFragment : BaseFragment<HomeViewModel, FragmentFavouritesBinding
         if(authToken != getString(R.string.NULL_STRING)) {
             val token = authToken
             val jwt = JWT(token)
-            var user = makeUserFromJWT(jwt)
+            val user = makeUserFromJWT(jwt)
             viewModel.getFavoritePlaces(user.id)
         }
 

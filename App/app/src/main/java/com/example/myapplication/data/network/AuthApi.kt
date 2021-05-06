@@ -1,7 +1,6 @@
 package com.example.myapplication.data.network
 
 import com.example.myapplication.data.responses.LoginResponse
-import com.example.myapplication.data.responses.Place
 import com.example.myapplication.data.responses.RegisterRequest
 import com.example.myapplication.data.responses.RegisterResponse
 import retrofit2.http.*

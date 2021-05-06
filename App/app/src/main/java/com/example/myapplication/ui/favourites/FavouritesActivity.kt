@@ -1,9 +1,7 @@
 package com.example.myapplication.ui.favourites
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 
 class FavouritesActivity : AppCompatActivity() {

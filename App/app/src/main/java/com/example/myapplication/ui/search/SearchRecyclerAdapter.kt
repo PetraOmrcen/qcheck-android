@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.data.responses.Place
 import com.example.myapplication.ui.inflate
+import java.util.*
 import kotlin.collections.ArrayList
 
-class SearchRecyclerAdapter(private val places: ArrayList<Place>): RecyclerView.Adapter<SearchPlaceHolder>(), Filterable {
+class SearchRecyclerAdapter(places: ArrayList<Place>): RecyclerView.Adapter<SearchPlaceHolder>(), Filterable {
 
     var placesList = ArrayList<Place>(places)
     var placesListFilter = ArrayList<Place>(places)
@@ -30,15 +31,15 @@ class SearchRecyclerAdapter(private val places: ArrayList<Place>): RecyclerView.
 
         return object: Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                var filterResults = FilterResults()
+                val filterResults = FilterResults()
                 if (constraint == null || constraint.isEmpty()) {
                     filterResults.count = placesListFilter.size
                     filterResults.values = placesListFilter
                 } else {
-                    var searchChar: String = constraint.toString().toLowerCase()
-                    var placesList = ArrayList<Place>()
+                    val searchChar: String = constraint.toString().toLowerCase(Locale.ROOT)
+                    val placesList = ArrayList<Place>()
                     for (place in placesListFilter) {
-                        if (place.placeName.toLowerCase().contains(searchChar)) {
+                        if (place.placeName.toLowerCase(Locale.ROOT).contains(searchChar)) {
                             placesList.add(place)
                         }
                     }

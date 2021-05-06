@@ -3,7 +3,6 @@ package com.example.myapplication.data.repository
 import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.data.network.AuthApi
 import com.example.myapplication.data.responses.RegisterRequest
-import com.example.myapplication.data.responses.RegisterResponse
 
 class AuthRepository(
     private val api: AuthApi,

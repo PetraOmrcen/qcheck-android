@@ -1,7 +1,5 @@
 package com.example.myapplication.ui.base
 
-import android.content.Context
-import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +15,6 @@ import com.example.myapplication.data.repository.BaseRepository
 import com.example.myapplication.ui.startNewActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.tasks.OnCompleteListener
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -51,11 +48,11 @@ abstract class BaseFragment<VM : BaseViewModel, B : ViewBinding, R : BaseReposit
         //val api = remoteDataSource.buildApi(UserApi::class.java, authToken)
         //viewModel.logout(api)
 
-        var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build()
 
-        var mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+        val mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
         runBlocking { mGoogleSignInClient.signOut() }
 

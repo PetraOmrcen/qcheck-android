@@ -2,6 +2,7 @@ package com.example.myapplication.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,8 +50,7 @@ fun translateValueToColor(value: Int): Int {
     val R = (255 * value) / 100
     val G = (255 * (100 - value)) / 100
     val B = 0
-    val color = android.graphics.Color.argb(255, R, G, B)
-    return color
+    return Color.argb(255, R, G, B)
 }
 
 fun View.enable(enabled: Boolean) {

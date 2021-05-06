@@ -25,11 +25,11 @@ class SearchViewModel(
     }
 
     fun getDistance(place: Place): Float {
-        var loc = Location("")
+        val loc = Location("")
         loc.latitude = place.latitude
         loc.longitude = place.longitude
 
-        var user = runBlocking { repository.getUserLocation() }
+        val user = runBlocking { repository.getUserLocation() }
 
         return loc.distanceTo(user)
     }

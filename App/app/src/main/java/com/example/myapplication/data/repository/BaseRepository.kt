@@ -1,6 +1,5 @@
 package com.example.myapplication.data.repository
 
-import androidx.datastore.preferences.preferencesKey
 import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.network.UserApi
 import kotlinx.coroutines.Dispatchers

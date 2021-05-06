@@ -14,11 +14,8 @@ import com.example.myapplication.data.network.PlaceApi
 import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.repository.PlaceRepository
 import com.example.myapplication.data.responses.Place
-import com.example.myapplication.databinding.FragmentFavouritesBinding
 import com.example.myapplication.databinding.FragmentMyplacesBinding
 import com.example.myapplication.ui.base.BaseFragment
-import com.example.myapplication.ui.home.HomeRecyclerAdapter
-import com.example.myapplication.ui.home.HomeViewModel
 import com.example.myapplication.ui.makeUserFromJWT
 import com.example.myapplication.ui.search.SearchRecyclerAdapter
 import com.example.myapplication.ui.visible
@@ -53,7 +50,7 @@ class MyPlacesFragment : BaseFragment<MyPlacesViewModel, FragmentMyplacesBinding
         if(authToken != getString(R.string.NULL_STRING)) {
             val token = authToken
             val jwt = JWT(token)
-            var user = makeUserFromJWT(jwt)
+            val user = makeUserFromJWT(jwt)
             viewModel.getMyPlaces(user.id)
         }
 

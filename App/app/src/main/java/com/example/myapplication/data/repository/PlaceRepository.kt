@@ -46,9 +46,9 @@ class PlaceRepository (private val api: PlaceApi, private val preferences: UserP
     }
 
     suspend fun getUserLocation(): Location{
-        var user = Location("")
-        var lat = runBlocking { preferences.userLat.first() }.toString()
-        var long = runBlocking { preferences.userLong.first() }.toString()
+        val user = Location("")
+        val lat = runBlocking { preferences.userLat.first() }.toString()
+        val long = runBlocking { preferences.userLong.first() }.toString()
         if(lat != NULL_STRING && long != NULL_STRING) {
             user.latitude = lat.toDouble()
             user.longitude = long.toDouble()

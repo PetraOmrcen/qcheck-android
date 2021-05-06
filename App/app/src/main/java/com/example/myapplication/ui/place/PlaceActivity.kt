@@ -12,9 +12,9 @@ class PlaceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place)
 
-        var b = intent.extras
-        if(b != null) {
-            placeId = b.get("PlaceId") as Long
+        val bundle = intent.extras
+        if(bundle != null) {
+            placeId = bundle.get("PlaceId") as Long
         }
         title = ""
     }

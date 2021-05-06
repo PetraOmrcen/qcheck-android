@@ -124,7 +124,7 @@ class MapFragment : BaseFragment<MapViewModel, FragmentMapBinding, PlaceReposito
         }
     }
 
-    public fun getLocationPermission() {
+    private fun getLocationPermission() {
         /*
          * Request location permission, so that we can get the location of the
          * device. The result of the permission request is handled by a callback,

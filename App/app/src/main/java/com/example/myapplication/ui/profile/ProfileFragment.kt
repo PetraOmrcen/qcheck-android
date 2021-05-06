@@ -20,7 +20,6 @@ import com.example.myapplication.ui.disableEnableControls
 import com.example.myapplication.ui.favourites.FavouritesActivity
 import com.example.myapplication.ui.makeUserFromJWT
 import com.example.myapplication.ui.myPlaces.MyPlacesActivity
-import com.example.myapplication.ui.place.PlaceActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.coroutines.flow.first
@@ -37,7 +36,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, U
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         userPreferences = UserPreferences(requireContext())
         authToken = runBlocking { userPreferences.authToken.first() }.toString()
@@ -64,7 +63,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, U
         if(authToken != getString(R.string.NULL_STRING)) {
             val token = authToken
             val jwt = JWT(token)
-            var user = makeUserFromJWT(jwt)
+            val user = makeUserFromJWT(jwt)
             binding.textViewProfile.text =  user.firstName + " " + user.lastName
             if(user.roleId == getString(R.string.ROLE_USER)){
                 disableEnableControls(false, binding.linearlayout2)

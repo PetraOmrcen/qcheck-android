@@ -15,6 +15,7 @@ import com.example.myapplication.data.responses.Place
 import com.example.myapplication.databinding.FragmentPlaceBinding
 import com.example.myapplication.ui.base.BaseFragment
 import com.example.myapplication.ui.makeUserFromJWT
+import com.example.myapplication.ui.visible
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlin.properties.Delegates
@@ -39,7 +40,7 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
         if(authToken != getString(R.string.NULL_STRING)) {
             val token = authToken
             val jwt = JWT(token)
-            var user = makeUserFromJWT(jwt)
+            val user = makeUserFromJWT(jwt)
             userId = user.id.toLong()
             viewModel.isFavorite(placeId, userId)
             binding.favoriteButton.isEnabled = true
@@ -60,7 +61,7 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
                     binding.textViewAddressPlace.text = place.address
                 }
                 is Resource.Loading -> {
-                    //binding.progressbar.visible(true)
+                    binding.progressbarplace.visible(true)
                 }
             }
         })

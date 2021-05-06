@@ -1,8 +1,6 @@
 package com.example.myapplication.ui.home
 
-import android.R.attr.data
 import android.content.Context
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +18,6 @@ import com.example.myapplication.data.responses.Place
 import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.ui.base.BaseFragment
 import com.example.myapplication.ui.makeUserFromJWT
-import com.example.myapplication.ui.map.MapFragment
 import com.example.myapplication.ui.visible
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -63,7 +60,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding, PlaceRepos
         if(authToken != getString(R.string.NULL_STRING)) {
             val token = authToken
             val jwt = JWT(token)
-            var user = makeUserFromJWT(jwt)
+            val user = makeUserFromJWT(jwt)
             viewModel.getFavoritePlaces(user.id)
         }else {
             binding.textViewFavorites.isInvisible = true
