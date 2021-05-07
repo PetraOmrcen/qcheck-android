@@ -48,12 +48,18 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
         }else {
             binding.favoriteButton.isEnabled = false
             binding.favoriteButton.isVisible = false
+
+            binding.buttonDecr.isEnabled = false
+            binding.buttonIncr.isEnabled = false
+            binding.buttonDecr.isVisible = false
+            binding.buttonIncr.isVisible = false
         }
 
         viewModel.place.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     this.place = it.value
+                    binding.progressbarplace.visible(false)
 
                     binding.textViewProgress.text = place.currentOccupancy.toString() + " / " + place.maxOccupancy.toString()
                     binding.textViewPlaceName.text = place.placeName

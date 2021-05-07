@@ -20,6 +20,7 @@ import com.example.myapplication.ui.auth.AuthActivity
 import com.example.myapplication.ui.map.MapFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -92,7 +93,34 @@ class MainActivity : AppCompatActivity() {
 
     private val locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
-            runBlocking { userPreferences.saveUserLocation(location.latitude.toString(), location.longitude.toString()) }
+            val lat = runBlocking { userPreferences.userLat.first().toString() }
+            val long = runBlocking { userPreferences.userLong.first().toString() }
+            if(lat != "null" && long != "null"){
+                val userLoc = LatLng(lat.toDouble(), long.toDouble())
+                if((userLoc.latitude != location.latitude) && (userLoc.longitude != location.longitude)) {
+                    runBlocking {
+                        userPreferences.saveUserLocation(
+                            location.latitude.toString(),
+                            location.longitude.toString()
+                        )
+                    }
+                    finish()
+                    overridePendingTransition(0, 0)
+                    startActivity(intent)
+                    overridePendingTransition(0, 0)
+                }
+            }else{
+                runBlocking {
+                    userPreferences.saveUserLocation(
+                        location.latitude.toString(),
+                        location.longitude.toString()
+                    )
+                }
+                finish()
+                overridePendingTransition(0, 0)
+                startActivity(intent)
+                overridePendingTransition(0, 0)
+            }
         }
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
         override fun onProviderEnabled(provider: String) {}
