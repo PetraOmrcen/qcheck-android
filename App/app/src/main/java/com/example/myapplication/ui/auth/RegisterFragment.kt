@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
+import com.example.myapplication.Validator
 import com.example.myapplication.data.network.AuthApi
 import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.repository.AuthRepository
@@ -39,9 +40,9 @@ class RegisterFragment : BaseFragment<AuthViewModel, FragmentRegisterBinding, Au
 
         binding.editTextTextEmailAddress.addTextChangedListener {
             email = it.toString()
-            if(!isEmailValid(email)) binding.textViewMailRegister.setTextColor(Color.RED)
+            if(!Validator.isEmailValid(email)) binding.textViewMailRegister.setTextColor(Color.RED)
             else binding.textViewMailRegister.setTextColor(Color.BLACK)
-            if(isEmailValid(email) && isNameValid(name) && password.isNotEmpty() && email.isNotEmpty() && name.isNotEmpty()) {
+            if(Validator.isEmailValid(email) && Validator.isNameValid(name) && password.isNotEmpty()) {
                 binding.buttonRegister.enable(true)
             }
             else binding.buttonRegister.enable(false)
@@ -51,7 +52,7 @@ class RegisterFragment : BaseFragment<AuthViewModel, FragmentRegisterBinding, Au
             password = it.toString()
             if(password.isEmpty()) binding.textViewPassRegister.setTextColor(Color.RED)
             else binding.textViewPassRegister.setTextColor(Color.BLACK)
-            if(isEmailValid(email) && isNameValid(name) && password.isNotEmpty() && email.isNotEmpty() && name.isNotEmpty()) {
+            if(Validator.isEmailValid(email) && Validator.isNameValid(name) && password.isNotEmpty()) {
                 binding.buttonRegister.enable(true)
             }
             else binding.buttonRegister.enable(false)
@@ -59,9 +60,9 @@ class RegisterFragment : BaseFragment<AuthViewModel, FragmentRegisterBinding, Au
 
         binding.editTextTextPersonName.addTextChangedListener {
             name = it.toString()
-            if(name.isEmpty()) binding.textViewNameRegister.setTextColor(Color.RED)
+            if(!Validator.isNameValid(name)) binding.textViewNameRegister.setTextColor(Color.RED)
             else binding.textViewNameRegister.setTextColor(Color.BLACK)
-            if(isEmailValid(email) && isNameValid(name) && password.isNotEmpty() && email.isNotEmpty() && name.isNotEmpty()) {
+            if(Validator.isEmailValid(email) && Validator.isNameValid(name) && password.isNotEmpty()) {
                 binding.buttonRegister.enable(true)
             }
             else binding.buttonRegister.enable(false)

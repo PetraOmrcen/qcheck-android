@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
+import com.example.myapplication.Validator
 import com.example.myapplication.data.network.AuthApi
 import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.repository.AuthRepository
@@ -49,9 +50,9 @@ class  LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRep
 
             binding.editTextTextEmailAddress.addTextChangedListener {
                 email = it.toString()
-                if(!isEmailValid(email)) binding.textViewMail.setTextColor(Color.RED)
+                if(!Validator.isEmailValid(email)) binding.textViewMail.setTextColor(Color.RED)
                 else binding.textViewMail.setTextColor(Color.BLACK)
-                if(isEmailValid(email) && password.isNotEmpty() && email.isNotEmpty()) {
+                if(Validator.isEmailValid(email) && password.isNotEmpty()) {
                     binding.buttonLogin.enable(true)
                 }
                 else binding.buttonLogin.enable(false)
@@ -61,7 +62,7 @@ class  LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRep
                 password = it.toString()
                 if(password.isEmpty()) binding.textViewPass.setTextColor(Color.RED)
                 else binding.textViewPass.setTextColor(Color.BLACK)
-                if(isEmailValid(email) && password.isNotEmpty() && email.isNotEmpty()) {
+                if(Validator.isEmailValid(email) && password.isNotEmpty()) {
                     binding.buttonLogin.enable(true)
                 }
                 else binding.buttonLogin.enable(false)
@@ -75,10 +76,6 @@ class  LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRep
             binding.textViewRegisterNow.setOnClickListener{
                 Navigation.findNavController(binding.root).navigate(R.id.action_loginFragment_to_registerFragment)
             }
-        }
-
-        private fun isEmailValid(email: String): Boolean {
-            return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
         }
 
         private fun login() {

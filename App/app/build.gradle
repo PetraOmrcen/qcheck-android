@@ -53,9 +53,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.wear:wear:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
@@ -91,6 +88,19 @@ dependencies {
 
     //Design
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-
     implementation 'com.android.support:recyclerview-v7:+'
+
+
+    //test
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "androidx.room:room-testing:2.2.6"
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "com.google.truth:truth:1.1.2"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.4"
+    testImplementation 'org.robolectric:robolectric:4.5.1'
+    testImplementation 'androidx.test:core:1.2.0'
+    androidTestImplementation "com.google.truth:truth:1.1.2"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
 }
