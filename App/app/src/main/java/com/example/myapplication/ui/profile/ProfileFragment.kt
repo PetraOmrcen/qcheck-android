@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.profile
+ package com.example.myapplication.ui.profile
 
 import android.content.Intent
 import android.os.Bundle
