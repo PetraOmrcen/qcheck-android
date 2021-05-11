@@ -49,6 +49,12 @@ class UserPreferences(
         }
     }
 
+    suspend fun clearAuthtoken() {
+        dataStore.edit { preferences ->
+            preferences.remove(KEY_AUTH)
+        }
+    }
+
     companion object {
         private val KEY_AUTH = preferencesKey<String>("key_auth")
         private val KEY_USER_LOC = preferencesKey<String>("key_user_loc")

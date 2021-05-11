@@ -20,7 +20,6 @@ import com.example.myapplication.ui.disableEnableControls
 import com.example.myapplication.ui.favourites.FavouritesActivity
 import com.example.myapplication.ui.makeUserFromJWT
 import com.example.myapplication.ui.myPlaces.MyPlacesActivity
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -29,8 +28,6 @@ import kotlinx.coroutines.runBlocking
 class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, UserRepository>() {
 
     private lateinit var  authToken: String
-    var googleAcc: Boolean = false
-    lateinit var  account: GoogleSignInAccount
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -41,12 +38,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, U
         userPreferences = UserPreferences(requireContext())
         authToken = runBlocking { userPreferences.authToken.first() }.toString()
 
-        if(GoogleSignIn.getLastSignedInAccount(context) != null){
-            account = GoogleSignIn.getLastSignedInAccount(context)!!
-            googleAcc = true
-        }
-
-        if(authToken == getString(R.string.NULL_STRING) && !googleAcc) {
+        if(authToken == getString(R.string.NULL_STRING)) {
             startActivity(Intent(context, AuthActivity::class.java))
         }
 
@@ -84,10 +76,6 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, U
                     startActivity(intent)
                 }
             }
-        }
-
-        if(googleAcc) {
-            binding.textViewProfile.text =  account.givenName + " " + account.familyName
         }
 
         binding.logoutText.setOnClickListener {

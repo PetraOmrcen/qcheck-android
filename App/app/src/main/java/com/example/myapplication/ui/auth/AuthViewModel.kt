@@ -30,6 +30,13 @@ class AuthViewModel(
         _loginResponse.value = repository.login(email, password)
     }
 
+    fun google_login(
+        id_token: String
+    ) = viewModelScope.launch {
+        _loginResponse.value = Resource.Loading
+        _loginResponse.value = repository.google_login(id_token)
+    }
+
     fun register(
             email: String,
             password: String,

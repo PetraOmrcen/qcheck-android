@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var userPreferences: UserPreferences
     private lateinit var  authToken: String
-    private var googleAcc: Boolean = false
-    private lateinit var  account: GoogleSignInAccount
     private lateinit var binding: ActivityMainBinding
 
     private var locationManager : LocationManager? = null
@@ -63,15 +61,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         authToken = runBlocking { userPreferences.authToken.first() }.toString()
-        if(GoogleSignIn.getLastSignedInAccount(this) != null){
-            account = GoogleSignIn.getLastSignedInAccount(this)!!
-            googleAcc = true
-        }
 
         navView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_profile -> {
-                    if (authToken == getString(R.string.NULL_STRING) && !googleAcc) {
+                    if (authToken == getString(R.string.NULL_STRING)) {
                         startActivity(Intent(this, AuthActivity::class.java))
                     } else {
                         navController.navigate(R.id.navigation_profile)

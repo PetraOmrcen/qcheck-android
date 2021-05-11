@@ -56,7 +56,7 @@ abstract class BaseFragment<VM : BaseViewModel, B : ViewBinding, R : BaseReposit
 
         runBlocking { mGoogleSignInClient.signOut() }
 
-        userPreferences.clear()
+        userPreferences.clearAuthtoken()
         requireActivity().startNewActivity(MainActivity::class.java)
     }
 

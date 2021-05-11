@@ -43,4 +43,11 @@ interface PlaceApi {
             @Path("user_id") userId: Long)
     : Boolean
 
+    @Headers("Content-Type: application/json")
+    @GET("place/{place_id}/checkEmployeePrivilege/{user_id}")
+    suspend fun isAllowed(
+        @Path("place_id") placeId: Long,
+        @Path("user_id") userId: Long)
+            : Boolean
+
 }

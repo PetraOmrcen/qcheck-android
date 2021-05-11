@@ -21,4 +21,9 @@ interface AuthApi {
             @Body user: RegisterRequest
     ) : RegisterResponse
 
+    @POST("app_user/tokensignin/{id_token}")
+    suspend fun google_login(
+        @Path("id_token") id_token: String
+    ) : LoginResponse
+
 }

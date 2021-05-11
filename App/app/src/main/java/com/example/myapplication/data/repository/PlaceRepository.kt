@@ -41,6 +41,10 @@ class PlaceRepository (private val api: PlaceApi, private val preferences: UserP
         api.isFavorite(placeId, userId)
     }
 
+    suspend fun isAllowed(placeId : Long, userId: Long) = safeApiCall {
+        api.isAllowed(placeId, userId)
+    }
+
     suspend fun saveUserLocation(location: Location){
         preferences.saveUserLocation(location.latitude.toString(), location.longitude.toString())
     }

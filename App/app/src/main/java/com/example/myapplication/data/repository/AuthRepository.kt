@@ -16,6 +16,10 @@ class AuthRepository(
         api.login("password", email, password)
     }
 
+    suspend fun google_login(token: String) = safeApiCall {
+        api.google_login(token)
+    }
+
     suspend fun register(
             email: String,
             password: String,

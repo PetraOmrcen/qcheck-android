@@ -26,12 +26,16 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
     private lateinit var  authToken: String
     private var userId by Delegates.notNull<Long>()
     private var isFavorite by Delegates.notNull<Boolean>()
+    private var isAllowed by Delegates.notNull<Boolean>()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val placeId = (activity as PlaceActivity).placeId
+        var placeId = (0.0).toLong()
+        val bundle = activity?.intent?.extras
+        if(bundle != null) {
+            placeId = (bundle.get("PlaceId") as Long)
+        }
 
         viewModel.getPlace(placeId)
 
@@ -43,6 +47,7 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
             val user = makeUserFromJWT(jwt)
             userId = user.id.toLong()
             viewModel.isFavorite(placeId, userId)
+            viewModel.isAllowed(placeId, userId)
             binding.favoriteButton.isEnabled = true
             binding.favoriteButton.isVisible = true
         }else {
@@ -81,8 +86,21 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
                     else
                         binding.favoriteButton.setBackgroundResource(R.drawable.favourites_darkblue)
                 }
-                is Resource.Loading -> {
-                    //binding.progressbar.visible(true)
+            }
+        })
+
+        viewModel.isAllowed.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Resource.Success -> {
+                    this.isAllowed = it.value
+                    if(isAllowed) {
+                        binding.buttonDecr.isVisible = true
+                        binding.buttonIncr.isVisible = true
+                    }
+                    else{
+                        binding.buttonDecr.isVisible = false
+                        binding.buttonIncr.isVisible = false
+                    }
                 }
             }
         })
