@@ -37,6 +37,14 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
             placeId = (bundle.get("PlaceId") as Long)
         }
 
+        binding.favoriteButton.isEnabled = false
+        binding.favoriteButton.isVisible = false
+
+        binding.buttonDecr.isEnabled = false
+        binding.buttonIncr.isEnabled = false
+        binding.buttonDecr.isVisible = false
+        binding.buttonIncr.isVisible = false
+
         viewModel.getPlace(placeId)
 
         authToken = runBlocking { userPreferences.authToken.first() }.toString()
@@ -50,14 +58,6 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
             viewModel.isAllowed(placeId, userId)
             binding.favoriteButton.isEnabled = true
             binding.favoriteButton.isVisible = true
-        }else {
-            binding.favoriteButton.isEnabled = false
-            binding.favoriteButton.isVisible = false
-
-            binding.buttonDecr.isEnabled = false
-            binding.buttonIncr.isEnabled = false
-            binding.buttonDecr.isVisible = false
-            binding.buttonIncr.isVisible = false
         }
 
         viewModel.place.observe(viewLifecycleOwner, Observer {
@@ -96,10 +96,14 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
                     if(isAllowed) {
                         binding.buttonDecr.isVisible = true
                         binding.buttonIncr.isVisible = true
+                        binding.buttonDecr.isEnabled = true
+                        binding.buttonIncr.isEnabled = true
                     }
                     else{
                         binding.buttonDecr.isVisible = false
                         binding.buttonIncr.isVisible = false
+                        binding.buttonDecr.isEnabled = false
+                        binding.buttonIncr.isEnabled = false
                     }
                 }
             }
