@@ -4,15 +4,11 @@ import android.content.Context
 import android.location.Location
 import androidx.test.core.app.ApplicationProvider
 import com.example.myapplication.data.UserPreferences
-import com.example.myapplication.data.network.AuthApi
 import com.example.myapplication.data.network.PlaceApi
 import com.example.myapplication.data.network.RemoteDataSource
-import com.example.myapplication.data.repository.AuthRepository
 import com.example.myapplication.data.repository.PlaceRepository
 import com.example.myapplication.getOrAwaitValue1
-import com.example.myapplication.ui.auth.AuthViewModel
 import com.example.myapplication.ui.map.MapViewModel
-import com.google.android.libraries.places.api.model.Place
 import com.google.common.truth.Truth
 import junit.framework.TestCase
 import kotlinx.coroutines.flow.first
@@ -52,7 +48,7 @@ class MapViewModelTest : TestCase() {
 
     @Test
     fun testSaveUserLocation() {
-        var location:Location = Location("")
+        var location = Location("")
         location.latitude = 0.0
         location.longitude = 0.0
 

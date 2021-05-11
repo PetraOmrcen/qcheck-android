@@ -8,7 +8,6 @@ import com.example.myapplication.data.network.RemoteDataSource
 import com.example.myapplication.data.repository.PlaceRepository
 import com.example.myapplication.getOrAwaitValue1
 import com.example.myapplication.ui.myPlaces.MyPlacesViewModel
-import com.example.myapplication.ui.place.PlaceViewModel
 import com.google.common.truth.Truth
 import junit.framework.TestCase
 import org.junit.Before

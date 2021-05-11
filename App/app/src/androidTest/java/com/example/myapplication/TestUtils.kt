@@ -9,8 +9,7 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 
 
-fun atPosition(position: Int, @NonNull itemMatcher: Matcher<View?>): Matcher<View?>? {
-    checkNotNull(itemMatcher)
+fun atPosition(position: Int, @NonNull itemMatcher: Matcher<View?>): Matcher<View?> {
     return object : BoundedMatcher<View?, RecyclerView>(RecyclerView::class.java) {
         override fun describeTo(description: Description) {
             description.appendText("has item at position $position: ")

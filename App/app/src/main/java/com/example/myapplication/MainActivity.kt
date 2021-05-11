@@ -18,8 +18,6 @@ import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.ui.auth.AuthActivity
 import com.example.myapplication.ui.map.MapFragment
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.flow.first

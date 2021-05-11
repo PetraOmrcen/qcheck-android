@@ -90,7 +90,6 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.android.support:recyclerview-v7:+'
 
-
     //test
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation "androidx.room:room-testing:2.2.6"

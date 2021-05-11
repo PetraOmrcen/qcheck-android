@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.profile
+ package com.example.myapplication.ui.profile
 
 import android.content.Intent
 import android.os.Bundle
@@ -20,12 +20,11 @@ import com.example.myapplication.ui.disableEnableControls
 import com.example.myapplication.ui.favourites.FavouritesActivity
 import com.example.myapplication.ui.makeUserFromJWT
 import com.example.myapplication.ui.myPlaces.MyPlacesActivity
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
 
-class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, UserRepository>() {
+ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding, UserRepository>() {
 
     private lateinit var  authToken: String
 

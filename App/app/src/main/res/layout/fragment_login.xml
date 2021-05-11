@@ -156,14 +156,14 @@
         app:layout_constraintTop_toTopOf="@+id/view" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="98dp"
-        android:layout_height="92dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="276dp"
-        android:src="@drawable/persone_withe"
-        app:layout_constraintEnd_toEndOf="@+id/view"
-        app:layout_constraintTop_toTopOf="@+id/view" />
+        android:id="@+id/imageView2"
+        android:layout_width="125dp"
+        android:layout_height="114dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/qcheck"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

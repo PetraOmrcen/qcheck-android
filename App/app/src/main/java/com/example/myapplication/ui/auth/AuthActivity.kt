@@ -12,18 +12,14 @@ import com.example.myapplication.data.network.AuthApi
 import com.example.myapplication.data.network.RemoteDataSource
 import com.example.myapplication.data.network.Resource
 import com.example.myapplication.data.repository.AuthRepository
-import com.example.myapplication.ui.*
 import com.example.myapplication.ui.base.ViewModelFactory
+import com.example.myapplication.ui.startNewActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import okhttp3.internal.wait
 
 
 class AuthActivity : AppCompatActivity() {
@@ -64,7 +60,7 @@ class AuthActivity : AppCompatActivity() {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            var idToken = account?.idToken
+            val idToken = account?.idToken
             val userPreferences = UserPreferences(this)
             val repository = AuthRepository(remoteDataSource.buildApi(AuthApi::class.java), userPreferences)
             val factory = ViewModelFactory(repository)

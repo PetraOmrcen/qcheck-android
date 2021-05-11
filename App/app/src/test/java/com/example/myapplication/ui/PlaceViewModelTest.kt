@@ -1,7 +1,6 @@
 package com.example.myapplication.ui
 
 import android.content.Context
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import com.example.myapplication.data.UserPreferences
 import com.example.myapplication.data.network.PlaceApi
@@ -12,7 +11,6 @@ import com.example.myapplication.ui.place.PlaceViewModel
 import com.google.common.truth.Truth
 import junit.framework.TestCase
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner

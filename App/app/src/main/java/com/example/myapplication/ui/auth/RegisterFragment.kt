@@ -97,14 +97,6 @@ class RegisterFragment : BaseFragment<AuthViewModel, FragmentRegisterBinding, Au
         viewModel.register(email, password, firstName, lastName)
     }
 
-    private fun isEmailValid(email: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
-
-    private fun isNameValid(name: String): Boolean {
-        return name.matches(Regex("[a-zA-Z]*[\\s]{1}[a-zA-Z].*"))
-    }
-
     override fun getViewModel() = AuthViewModel::class.java
 
     override fun getFragmentBinding(

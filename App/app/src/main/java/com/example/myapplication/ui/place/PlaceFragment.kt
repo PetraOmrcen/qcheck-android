@@ -82,7 +82,7 @@ class PlaceFragment : BaseFragment<PlaceViewModel, FragmentPlaceBinding, PlaceRe
                 is Resource.Success -> {
                     this.isFavorite = it.value
                     if(isFavorite)
-                        binding.favoriteButton.setBackgroundResource(R.drawable.favorites_red)
+                        binding.favoriteButton.setBackgroundResource(R.drawable.ic_baseline_favorite_24)
                     else
                         binding.favoriteButton.setBackgroundResource(R.drawable.favourites_darkblue)
                 }
