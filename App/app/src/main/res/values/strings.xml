@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="title_home">Home</string>
+    <string name="title_search">Search</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_maps">Map</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="don_t_have_an_account_register_now">Don\'t have an account? <b>Register Now</b></string>
+    <string name="email">email</string>
+    <string name="email_hint">john@mail.czom</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="forgot_your_password">Forgot your password?</string>
+    <string name="register_now">Register Now</string>
+    <string name="already_have_an_account_login_now">Already have an account? <b>Login Now</b></string>
+    <string name="title_activity_auth_login">authLogin</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="placeId">PlaceId</string>
+    <string name="NULL_STRING">null</string>
+    <string name="nanString">Nan</string>
+    <string name="ROLE_USER">ROLE_USER</string>
+    <string name="ROLE_OWNER">ROLE_OWNER</string>
+    <string name="ROLE_EMPLOYEE">ROLE_USER</string>
+</resources>
